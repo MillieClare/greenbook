@@ -1,4 +1,4 @@
-import { FilterAltRounded } from "@mui/icons-material";
+// import { FilterAltRounded } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import { Colors } from "../styles/colors";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
@@ -45,7 +45,7 @@ const FilterOptionContainer = () => {
             color: Colors.darkGreen,
           }}
         >
-          <FilterAltRounded style={{ color: Colors.darkGreen }} />
+          {/* <FilterAltRounded style={{ color: Colors.darkGreen }} /> */}
           {"Filter By Country"}
         </Typography>
       </Grid>
