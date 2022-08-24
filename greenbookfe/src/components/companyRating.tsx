@@ -1,6 +1,6 @@
+import React from "react";
 import EnergySavingsLeafIcon from "@mui/icons-material/EnergySavingsLeaf";
 import { Rating } from "@mui/material";
-import React from "react";
 import { Colors } from "../styles/colors";
 
 const CompanyRating = ({ rating }: { rating: number }) => {
