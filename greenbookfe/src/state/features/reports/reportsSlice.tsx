@@ -54,6 +54,7 @@ export const reportsSlice = createSlice({
 export const { filterByCountry, clearFilters } = reportsSlice.actions;
 
 export const allReports = (state: RootState) => state.reports.allReports;
+
 export const filteredReports = (state: RootState) =>
   state.reports.filteredReports;
 export const availableFilterOptions = (state: RootState) =>

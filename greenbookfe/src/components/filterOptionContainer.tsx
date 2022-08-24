@@ -20,7 +20,7 @@ const FilterOptionContainer = () => {
   const handleCountryClick = (country: string) => {
     console.log({ country });
     if (
-      filterConfiguration?.field === "country" &&
+      filterByCountry.filterConfiguration?.field === "country" &&
       filterConfiguration.value === country
     ) {
       dispatch(clearFilters());
