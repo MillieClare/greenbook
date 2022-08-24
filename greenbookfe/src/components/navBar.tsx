@@ -1,7 +1,11 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { AppBar, Box, Toolbar, IconButton, InputBase } from "@mui/material";
+import GreenBookLogo from "./greenBookLogo";
+// import { FilterAltRounded } from "@mui/icons-material";
 import { Colors } from "../styles/colors";
+// import SearchIcon from "@mui/icons-material/Search";
+import FilterOptionContainer from "./filterOptionContainer";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,16 +58,20 @@ const NavBar = () => {
         sx={{ backgroundColor: "#FFFFFF", paddingTop: 1 }}
       >
         <Toolbar>
+          <GreenBookLogo />
           <Search>
-            <SearchIconWrapper></SearchIconWrapper>
+            <SearchIconWrapper>{/* <SearchIcon /> */}</SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <IconButton onClick={handleFilterPress}></IconButton>
+          <IconButton onClick={handleFilterPress}>
+            {/* <FilterAltRounded style={{ color: Colors.darkGreen }} /> */}
+          </IconButton>
         </Toolbar>
       </AppBar>
+      {isFilterMenuOpen ? <FilterOptionContainer /> : null}
     </Box>
   );
 };
