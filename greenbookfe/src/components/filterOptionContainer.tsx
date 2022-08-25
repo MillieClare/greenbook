@@ -8,9 +8,12 @@ import { useAppSelector, useAppDispatch } from "./../state/hooks";
 import {
   availableFilterOptions,
   filterSettings,
-  filterByCountry,
+  // filterByCountry,
   clearFilters,
+  addFilter,
+  removeFilter,
 } from "../state/features/reports/reportsSlice";
+import ButtonChip from "./buttonChip";
 
 const FilterOptionContainer = () => {
   const { countries } = useAppSelector(availableFilterOptions);
@@ -18,14 +21,16 @@ const FilterOptionContainer = () => {
   const dispatch = useAppDispatch();
 
   const handleCountryClick = (country: string) => {
-    console.log({ country });
-    if (
-      filterConfiguration?.field === "country" &&
-      filterConfiguration.value === country
-    ) {
-      dispatch(clearFilters());
+    if (filterConfiguration.countries.includes(country)) {
+      dispatch(removeFilter({ field: "country", value: country }));
     } else {
-      dispatch(filterByCountry(country));
+      dispatch(addFilter({ field: "country", value: country }));
+    }
+  };
+
+  const clearFilter = (mode: string) => {
+    if (mode === "country") {
+      dispatch(clearFilters());
     }
   };
 
@@ -67,9 +72,8 @@ const FilterOptionContainer = () => {
             spacing={1}
           >
             {countries.map((country: string, index: number) => {
-              const selected =
-                filterConfiguration?.field === "country" &&
-                filterConfiguration?.value === country;
+              // const selected = filterConfiguration?.field === 'country' && filterConfiguration?.value === country;
+              const selected = filterConfiguration.countries.includes(country);
               return (
                 <CountryChip
                   key={`${country}_chip_${index}`}
@@ -81,6 +85,16 @@ const FilterOptionContainer = () => {
                 />
               );
             })}
+            {filterConfiguration.countries.length > 0 ? (
+              <ButtonChip
+                tooltip={"Clear filters"}
+                label={"Clear"}
+                clear
+                onClick={() => {
+                  clearFilter("country");
+                }}
+              />
+            ) : null}
           </Grid>
         </Grid>
       ) : null}
