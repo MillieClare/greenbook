@@ -1,4 +1,4 @@
-// import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
 import {
   FormControl,
   InputLabel,
@@ -59,7 +59,7 @@ const SearchInput = () => {
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {/* {values.showPassword ? <VisibilityOff /> : <Visibility />} */}
+              {values.showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         }
@@ -71,7 +71,7 @@ const SearchInput = () => {
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {/* {values.showPassword ? <VisibilityOff /> : <Visibility />} */}
+              {values.showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         }

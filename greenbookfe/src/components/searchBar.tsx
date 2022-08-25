@@ -1,7 +1,7 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-// import SearchIcon from "@mui/icons-material/Search";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,7 +49,7 @@ const SearchBar = () => {
   return (
     <Search>
       <SearchIconWrapper>
-        {/* <SearchIcon style={{ color: "#FFFFFF" }} /> */}
+        <SearchIcon style={{ color: "#FFFFFF" }} />
       </SearchIconWrapper>
       <StyledInputBase inputProps={{ "aria-label": "search" }} />
     </Search>

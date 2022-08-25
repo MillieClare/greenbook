@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, Grid, Button } from "@mui/material";
 import CountryText from "./countryText";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
-// import { FileDownload } from "@mui/icons-material";
+import { FileDownload } from "@mui/icons-material";
 import { Colors } from "./../styles/colors";
 import CompanyRating from "./companyRating";
 
@@ -123,7 +123,7 @@ const ReviewCard = ({
               {link ? (
                 <Button
                   variant="contained"
-                  // endIcon={<FileDownload />}
+                  endIcon={<FileDownload />}
                   disableElevation
                   style={{
                     fontFamily: FontFamilies.Montserrat,

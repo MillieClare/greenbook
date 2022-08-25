@@ -1,7 +1,7 @@
 import { Chip, Grid, Tooltip } from "@mui/material";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import { Colors } from "../styles/colors";
-import getCountryString from "../utilities/countryFormat";
+import { getCountryString } from "../utilities/countryFormat";
 
 type Props = {
   country: string;

@@ -3,7 +3,7 @@ import { RootState, AppThunk } from "./../../store";
 import MockData from "./../../../mockData";
 
 import { toast } from "react-toastify";
-import getCountryString from "../../../utilities/countryFormat";
+import { getCountryString } from "../../../utilities/countryFormat";
 
 export interface ReportsState {
   value: number;

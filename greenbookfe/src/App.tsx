@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./components/navBar";
 import ContentContainer from "./components/contentContainer";
 import ReportsContainer from "./components/reportsContainer";
+
 const theme = createTheme({
   palette: {
     primary: {
