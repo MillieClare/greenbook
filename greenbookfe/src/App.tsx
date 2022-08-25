@@ -25,8 +25,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <NavBar hideFilters={reports.length === 0} /> */}
-      <NavBar />
+      <NavBar hideFilters={reports.length === 0} />
       <ContentContainer backgroundFilled={false}>
         {reports && reports.length > 0 ? (
           <ReportsContainer />

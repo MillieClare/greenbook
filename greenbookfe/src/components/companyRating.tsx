@@ -1,5 +1,6 @@
 import EnergySavingsLeafIcon from "@mui/icons-material/EnergySavingsLeaf";
 import { Rating } from "@mui/material";
+import React from "react";
 import { Colors } from "../styles/colors";
 
 const CompanyRating = ({ rating }: { rating: number }) => {
@@ -17,7 +18,7 @@ const CompanyRating = ({ rating }: { rating: number }) => {
       }
       emptyIcon={
         <EnergySavingsLeafIcon
-          style={{ color: Colors.green, opacity: 0.55 }}
+          style={{ color: "#FFFFFF", opacity: 0 }}
           fontSize="inherit"
         />
       }

@@ -2,6 +2,8 @@ import { Chip, Grid, Tooltip } from "@mui/material";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import { Colors } from "../styles/colors";
 import { getCountryString } from "../utilities/countryFormat";
+import { countryList } from "../utilities/countryList";
+import Emoji from "./emoji";
 
 type Props = {
   country: string;
@@ -11,17 +13,25 @@ type Props = {
 
 const CountryChip = ({ country, onClick, selected }: Props) => {
   const countryString = getCountryString(country);
+  const countryFlag =
+    countryList.find((entry) => entry.name === country)?.flag || "🏳️‍🌈";
+
   return (
     <Tooltip
       title={
         selected
-          ? `Clear ${countryString} filter`
-          : `Filter by companies from ${countryString}`
+          ? `Remove ${country} filter`
+          : `Filter by companies from ${country}`
       }
     >
       <Grid item>
         <Chip
-          label={countryString}
+          avatar={
+            <div style={{ paddingLeft: 5 }}>
+              <Emoji emoji={countryFlag} />
+            </div>
+          }
+          label={country}
           onClick={onClick}
           variant="outlined"
           sx={[
