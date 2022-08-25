@@ -5,6 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./components/navBar";
 import ContentContainer from "./components/contentContainer";
 import ReportsContainer from "./components/reportsContainer";
+import { useAppSelector } from "./state/hooks";
+import { allReports } from "./state/features/reports/reportsSlice";
+import LoadingScreen from "./components/loadingScreen";
 
 const theme = createTheme({
   palette: {
@@ -18,11 +21,17 @@ const theme = createTheme({
 });
 
 function App() {
+  const reports = useAppSelector(allReports);
+
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
+      <NavBar hideFilters={reports.length === 0} />
       <ContentContainer backgroundFilled={false}>
-        <ReportsContainer />
+        {reports && reports.length > 0 ? (
+          <ReportsContainer />
+        ) : (
+          <LoadingScreen />
+        )}
       </ContentContainer>
       <ToastContainer
         position="top-center"
