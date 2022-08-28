@@ -106,33 +106,84 @@ const FilterOptionContainer = () => {
                 }}
               />
             ) : null}
-            {sectors.map((sector: string, index: number) => {
-              // const selected = filterConfiguration?.field === 'country' && filterConfiguration?.value === country;
-              const selected = filterConfiguration.sectors.includes(sector);
-              return (
-                <CountryChip
-                  key={`${sector}_chip_${index}`}
-                  onClick={() => {
-                    handleCountryClick(sector);
-                  }}
-                  sector={sector}
-                  selected={selected}
-                />
-              );
-            })}
-            {filterConfiguration.sectors.length > 0 ? (
-              <ButtonChip
-                tooltip={"Clear filters"}
-                label={"Clear"}
-                clear
-                onClick={() => {
-                  clearFilter("sector");
-                }}
-              />
-            ) : null}
           </Grid>
         </Grid>
       ) : null}
+      {sectors ? (
+        <Grid
+          item
+          style={{
+            marginBottom: 15,
+            paddingLeft: 15,
+            paddingRight: 15,
+            borderRadius: 15,
+          }}
+        >
+      <Grid
+            container
+            justifyContent="flex-start"
+            alignItems="center"
+            rowSpacing={1}
+            spacing={1}
+          >
+            <Grid
+              item
+              style={{ paddingLeft: 15, paddingRight: 15, width: "100%" }}
+            >
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="div"
+                fontFamily={FontFamilies.Barlow}
+                color={Colors.dark}
+                sx={{
+                  paddingBottom: 0,
+                  paddingTop: 2,
+                  alignItems: "center",
+                  display: "flex",
+                  color: Colors.darkGreen,
+                }}
+              >
+                <FilterAltRounded style={{ color: Colors.darkGreen }} />
+                {"Filter By Sector"}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              style={{
+                marginBottom: 15,
+                paddingLeft: 15,
+                paddingRight: 15,
+                borderRadius: 15,
+              }}
+            >
+              {sectors.map((sector: string, index: number) => {
+                // const selected = filterConfiguration?.field === 'country' && filterConfiguration?.value === country;
+                const selected = filterConfiguration.sectors.includes(sector);
+                return (
+                  <CountryChip
+                    key={`${sector}_chip_${index}`}
+                    onClick={() => {
+                      handleCountryClick(sector);
+                    }}
+                    sector={sector}
+                    selected={selected}
+                  />
+                );
+              })}
+              {filterConfiguration.sectors.length > 0 ? (
+                <ButtonChip
+                  tooltip={"Clear filters"}
+                  label={"Clear"}
+                  clear
+                  onClick={() => {
+                    clearFilter("sector");
+                  }}
+                />
+              ) : null}
+            </Grid>
+          </Grid>
+        ) : null}
     </Grid>
   );
 };
