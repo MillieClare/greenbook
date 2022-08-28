@@ -12,7 +12,7 @@ const CompanyRating = ({ rating }: { rating: number }) => {
       precision={0.5}
       icon={
         <EnergySavingsLeafIcon
-          style={{ color: Colors.green }}
+          style={{ color: Colors.darkGreen }}
           fontSize="inherit"
         />
       }
