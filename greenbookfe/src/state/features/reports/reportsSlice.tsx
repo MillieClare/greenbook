@@ -60,6 +60,12 @@ export const reportsSlice = createSlice({
         (entry) => entry.country === action.payload
       );
     },
+
+    filterBySector: (state, action: PayloadAction<string>) => {
+      state.filteredReports = state.allReports.filter(
+        (entry) => entry.sector === action.payload
+      );
+    },
     clearFilters: (state) => {
       state.filterSettings = { countries: [], sectors: [], reviewers: [] };
       state.filteredReports = state.allReports;
@@ -82,7 +88,9 @@ export const reportsSlice = createSlice({
         case "country":
           filterVariables.countries.push(value);
           break;
-        // case 'sectors': filterVariables.sectors.push(value); break;
+        case "sectors":
+          filterVariables.sectors.push(value);
+          break;
         // case 'reviewers': filterVariables.reviewers.push(value); break;
         default:
           break;
@@ -95,9 +103,11 @@ export const reportsSlice = createSlice({
         );
       }
 
-      // if (filterVariables.sectors.length > 0) {
-      //   filteredData = state.allReports.filter(entry => filterVariables.sectors.includes(entry.sector as string))
-      // }
+      if (filterVariables.sectors.length > 0) {
+        filteredData = state.allReports.filter((entry) =>
+          filterVariables.sectors.includes(entry.sector as string)
+        );
+      }
 
       // if (filterVariables.reviewers.length > 0) {
       //   filteredData = state.allReports.filter(entry => filterVariables.reviewers.includes(entry.reviewer as string))

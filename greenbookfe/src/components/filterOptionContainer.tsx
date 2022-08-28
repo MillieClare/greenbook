@@ -17,6 +17,7 @@ import ButtonChip from "./buttonChip";
 
 const FilterOptionContainer = () => {
   const { countries } = useAppSelector(availableFilterOptions);
+  const { sectors } = useAppSelector(availableFilterOptions);
   const filterConfiguration = useAppSelector(filterSettings);
   const dispatch = useAppDispatch();
 
@@ -28,8 +29,18 @@ const FilterOptionContainer = () => {
     }
   };
 
+  const handleSectorClick = (sector: string) => {
+    if (filterConfiguration.sectors.includes(sector)) {
+      dispatch(removeFilter({ field: "sector", value: sector }));
+    } else {
+      dispatch(addFilter({ field: "sector", value: sector }));
+    }
+  };
+
   const clearFilter = (mode: string) => {
     if (mode === "country") {
+      dispatch(clearFilters());
+    } else if (mode === "sector") {
       dispatch(clearFilters());
     }
   };
@@ -92,6 +103,30 @@ const FilterOptionContainer = () => {
                 clear
                 onClick={() => {
                   clearFilter("country");
+                }}
+              />
+            ) : null}
+            {sectors.map((sector: string, index: number) => {
+              // const selected = filterConfiguration?.field === 'country' && filterConfiguration?.value === country;
+              const selected = filterConfiguration.sectors.includes(sector);
+              return (
+                <CountryChip
+                  key={`${sector}_chip_${index}`}
+                  onClick={() => {
+                    handleCountryClick(sector);
+                  }}
+                  sector={sector}
+                  selected={selected}
+                />
+              );
+            })}
+            {filterConfiguration.sectors.length > 0 ? (
+              <ButtonChip
+                tooltip={"Clear filters"}
+                label={"Clear"}
+                clear
+                onClick={() => {
+                  clearFilter("sector");
                 }}
               />
             ) : null}
