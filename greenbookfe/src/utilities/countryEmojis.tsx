@@ -259,7 +259,6 @@ const getCountryEmoji = (country: string) => {
   let countryFlag = null;
   let countryCode =
     countries.find((entry) => entry.name === country)?.code || null;
-  console.log({ countryCode });
   if (countryCode) {
     countryFlag = getUnicodeFlagIcon(countryCode);
   } else {
@@ -284,8 +283,6 @@ const generateLibrary = () => {
     const flag = getCountryEmoji(name);
     array.push({ name, code, flag });
   });
-
-  console.log(array);
 };
 
 export default generateLibrary;

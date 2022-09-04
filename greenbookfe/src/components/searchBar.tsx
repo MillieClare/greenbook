@@ -77,7 +77,6 @@ const SearchBar = () => {
   const handleOnKeyPressEvent = React.useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
-        console.log("search ", searchTerm);
         dispatch(search(searchTerm));
       }
     },

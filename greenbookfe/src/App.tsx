@@ -6,8 +6,9 @@ import NavBar from "./components/navBar";
 import ContentContainer from "./components/contentContainer";
 import ReportsContainer from "./components/reportsContainer";
 import { useAppSelector } from "./state/hooks";
-import { allReports } from "./state/features/reports/reportsSlice";
+import { allReports, loading } from "./state/features/reports/reportsSlice";
 import LoadingScreen from "./components/loadingScreen";
+import LoadingOverlay from "./components/loadingOverlay";
 
 const theme = createTheme({
   palette: {
@@ -22,10 +23,12 @@ const theme = createTheme({
 
 function App() {
   const reports = useAppSelector(allReports);
+  const isReportsLoading = useAppSelector(loading);
 
   return (
     <ThemeProvider theme={theme}>
       <NavBar hideFilters={reports.length === 0} />
+      {isReportsLoading ? <LoadingOverlay /> : null}
       <ContentContainer backgroundFilled={false}>
         {reports && reports.length > 0 ? (
           <ReportsContainer />

@@ -6,14 +6,21 @@ import {
   Button,
   Paper,
   Tooltip,
+  Popover,
 } from "@mui/material";
 import CountryText from "./countryText";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
-import { FileDownload, FileDownloadOff } from "@mui/icons-material";
+import {
+  FileDownload,
+  FileDownloadOff,
+  PictureAsPdf,
+} from "@mui/icons-material";
 import { Colors } from "./../styles/colors";
 import CompanyRating from "./companyRating";
 import { styled } from "@mui/material/styles";
 import { getCountryFlag } from "../utilities/countryFormat";
+import { useState } from "react";
+import React from "react";
 
 const Item = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -34,6 +41,93 @@ const ReviewCard = ({
   country?: string;
   rating?: number;
 }) => {
+  const [downloadOpen, setDownloadMenuOpen] = useState(false);
+
+  const [anchorElement, setAnchorElement] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElement(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorElement(null);
+  };
+
+  const downloadMenuOpen = Boolean(anchorElement);
+  const id = downloadMenuOpen ? "download-file-popover" : undefined;
+
+  const renderDownloadButton = () => {
+    return (
+      <>
+        <Button
+          variant="contained"
+          endIcon={<FileDownload />}
+          disableElevation
+          fullWidth
+          onClick={handleClick}
+          style={{
+            fontFamily: FontFamilies.Montserrat,
+            backgroundColor: Colors.green,
+            color: "#FFFFFF",
+            fontWeight: "bold",
+            margin: 0,
+          }}
+        >
+          {downloadMenuOpen ? "Select File" : "Download"}
+        </Button>
+        <Popover
+          id={id}
+          open={downloadMenuOpen}
+          anchorEl={anchorElement}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          style={{ width: anchorElement?.clientWidth }}
+          elevation={0}
+        >
+          <div style={{ padding: 10, borderRadius: 10 }}>
+            <Button
+              variant="contained"
+              endIcon={<PictureAsPdf />}
+              disableElevation
+              fullWidth
+              onClick={handleClick}
+              style={{
+                fontFamily: FontFamilies.Montserrat,
+                backgroundColor: Colors.green,
+                color: "#FFFFFF",
+                fontWeight: "bold",
+                margin: 0,
+                marginBottom: 10,
+              }}
+            >
+              1st April 2020
+            </Button>
+            <Button
+              variant="contained"
+              endIcon={<PictureAsPdf />}
+              disableElevation
+              fullWidth
+              onClick={handleClick}
+              style={{
+                fontFamily: FontFamilies.Montserrat,
+                backgroundColor: Colors.green,
+                color: "#FFFFFF",
+                fontWeight: "bold",
+                margin: 0,
+              }}
+            >
+              1st January 2022
+            </Button>
+          </div>
+        </Popover>
+      </>
+    );
+  };
+
   return (
     <Grid
       item
@@ -79,28 +173,28 @@ const ReviewCard = ({
                     {getCountryFlag(country)}
                   </div>
                 </Tooltip>
+                <Grid item>
+                  <Typography
+                    gutterBottom
+                    variant="caption"
+                    component="div"
+                    fontFamily={FontFamilies.Montserrat}
+                    sx={{ paddingBottom: 0, marginBottom: 0 }}
+                  >
+                    {sector}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography
-                  gutterBottom
-                  variant="caption"
-                  component="div"
-                  fontFamily={FontFamilies.Montserrat}
-                  sx={{ paddingBottom: 0, marginBottom: 0 }}
-                >
-                  {sector}
-                </Typography>
-              </Grid>
+              <Typography
+                gutterBottom
+                variant="caption"
+                component="div"
+                fontFamily={FontFamilies.Montserrat}
+                sx={{ paddingBottom: 0, marginBottom: 0 }}
+              >
+                {reviewer}
+              </Typography>
             </Grid>
-            <Typography
-              gutterBottom
-              variant="caption"
-              component="div"
-              fontFamily={FontFamilies.Montserrat}
-              sx={{ paddingBottom: 0, marginBottom: 0 }}
-            >
-              {reviewer}
-            </Typography>
           </Item>
         </Grid>
         <Grid
@@ -116,7 +210,6 @@ const ReviewCard = ({
             item
             display={"flex"}
             justifyContent="flex-end"
-            alignContent="flex-end"
             alignItems="flex-start"
             textAlign={"right"}
           >
@@ -157,21 +250,7 @@ const ReviewCard = ({
           style={{ padding: 16 }}
         >
           {link ? (
-            <Button
-              variant="contained"
-              endIcon={<FileDownload />}
-              disableElevation
-              fullWidth
-              style={{
-                fontFamily: FontFamilies.Montserrat,
-                backgroundColor: Colors.green,
-                color: "#FFFFFF",
-                fontWeight: "bold",
-                margin: 0,
-              }}
-            >
-              Download
-            </Button>
+            renderDownloadButton()
           ) : (
             <Button
               variant="contained"

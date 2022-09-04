@@ -4,7 +4,7 @@ import MockData from "./../../../mockData";
 
 import { toast } from "react-toastify";
 import { getCountryString } from "../../../utilities/countryFormat";
-// import { getAllCompanies } from "../../requests/getAllCompanies";
+import getAllCompanies from "../../requests/getAllCompanies";
 
 import { fetchAllCompanies } from "./reportsAPI";
 
@@ -13,8 +13,12 @@ export interface ReportsState {
   allReports: IReport[];
   filteredReports: IReport[];
   filterOptions: { countries?: string[]; sectors?: []; reviewers?: [] };
-  filterSettings: { countries: string[]; sectors: []; reviewers: [] };
-  // filterSettings?: { field?: string, value?: string },
+  filterSettings: {
+    countries: string[];
+    sectors: string[];
+    reviewers: string[];
+  };
+  loading: boolean;
   status?: string;
 }
 
@@ -22,21 +26,12 @@ interface IFilterOption {
   [key: string]: any;
 }
 
-const OFilterOptions: IFilterOption = {
-  countries: Array.from(new Set(MockData.map((report: any) => report.country))),
-  sectors: Array.from(new Set(MockData.map((report: any) => report.sector))),
-  reviewers: Array.from(
-    new Set(MockData.map((report: any) => report.reviewer))
-  ),
-};
-
 const initialState: ReportsState = {
   value: 0,
-  // allReports: MockData,
-  // filteredReports: MockData,
+  loading: false,
   allReports: [],
   filteredReports: [],
-  filterOptions: OFilterOptions,
+  filterOptions: { countries: [], sectors: [], reviewers: [] },
   filterSettings: { countries: [], sectors: [], reviewers: [] },
 };
 
@@ -60,15 +55,78 @@ export const reportsSlice = createSlice({
         (entry) => entry.country === action.payload
       );
     },
+    clearFilters: (state, action: PayloadAction<object>) => {
+      const { field } = action.payload as { field: string };
 
-    filterBySector: (state, action: PayloadAction<string>) => {
-      state.filteredReports = state.allReports.filter(
-        (entry) => entry.sector === action.payload
-      );
-    },
-    clearFilters: (state) => {
-      state.filterSettings = { countries: [], sectors: [], reviewers: [] };
-      state.filteredReports = state.allReports;
+      let filteredData = state.allReports;
+      let filterVariables = state.filterSettings;
+
+      const { countries, sectors, reviewers } = state.filterSettings;
+      if (!state.loading) {
+        state.loading = true;
+        switch (field) {
+          case "country":
+            filterVariables.countries = [];
+            if (sectors.length > 0 && reviewers.length > 0) {
+              filteredData = filteredData.filter(
+                (entry) =>
+                  filterVariables.sectors.includes(entry.sector as string) &&
+                  filterVariables.reviewers.includes(entry.reviewer as string)
+              );
+            } else if (sectors.length > 0 && reviewers.length === 0) {
+              filteredData = filteredData.filter((entry) =>
+                filterVariables.sectors.includes(entry.sector as string)
+              );
+            } else if (sectors.length === 0 && reviewers.length > 0) {
+              filteredData = filteredData.filter((entry) =>
+                filterVariables.reviewers.includes(entry.reviewer as string)
+              );
+            }
+            break;
+          case "sector":
+            filterVariables.sectors = [];
+            if (countries.length > 0 && reviewers.length > 0) {
+              filteredData = filteredData.filter(
+                (entry) =>
+                  filterVariables.countries.includes(entry.country as string) &&
+                  filterVariables.reviewers.includes(entry.reviewer as string)
+              );
+            } else if (countries.length > 0 && reviewers.length === 0) {
+              filteredData = filteredData.filter((entry) =>
+                filterVariables.countries.includes(entry.country as string)
+              );
+            } else if (countries.length === 0 && reviewers.length > 0) {
+              filteredData = filteredData.filter((entry) =>
+                filterVariables.reviewers.includes(entry.reviewer as string)
+              );
+            }
+            break;
+          case "reviewer":
+            filterVariables.reviewers = [];
+            if (countries.length > 0 && sectors.length > 0) {
+              filteredData = filteredData.filter(
+                (entry) =>
+                  filterVariables.countries.includes(entry.country as string) &&
+                  filterVariables.sectors.includes(entry.sector as string)
+              );
+            } else if (countries.length > 0 && sectors.length === 0) {
+              filteredData = filteredData.filter((entry) =>
+                filterVariables.countries.includes(entry.country as string)
+              );
+            } else if (countries.length === 0 && sectors.length > 0) {
+              filteredData = filteredData.filter((entry) =>
+                filterVariables.sectors.includes(entry.sector as string)
+              );
+            }
+            break;
+          default:
+            break;
+        }
+
+        state.filterSettings = filterVariables;
+        state.filteredReports = filteredData;
+        state.loading = false;
+      }
     },
     search: (state, action: PayloadAction<string>) => {
       const { payload } = action;
@@ -84,36 +142,44 @@ export const reportsSlice = createSlice({
         field: string;
         value: string;
       };
-      switch (field) {
-        case "country":
-          filterVariables.countries.push(value);
-          break;
-        case "sectors":
-          filterVariables.sectors.push(value);
-          break;
-        // case 'reviewers': filterVariables.reviewers.push(value); break;
-        default:
-          break;
+
+      if (!state.loading) {
+        state.loading = true;
+
+        switch (field) {
+          case "country":
+            filterVariables.countries.push(value);
+            break;
+          case "sector":
+            filterVariables.sectors.push(value);
+            break;
+          case "reviewer":
+            filterVariables.reviewers.push(value);
+            break;
+          default:
+            break;
+        }
+        let filteredData = state.allReports;
+
+        if (filterVariables.countries.length > 0) {
+          filteredData = filteredData.filter((entry) =>
+            filterVariables.countries.includes(entry.country as string)
+          );
+        }
+        if (filterVariables.sectors.length > 0) {
+          filteredData = filteredData.filter((entry) =>
+            filterVariables.sectors.includes(entry.sector as string)
+          );
+        }
+        if (filterVariables.reviewers.length > 0) {
+          filteredData = filteredData.filter((entry) =>
+            filterVariables.reviewers.includes(entry.reviewer as string)
+          );
+        }
+
+        state.filteredReports = filteredData;
+        state.loading = false;
       }
-      let filteredData = state.allReports;
-
-      if (filterVariables.countries.length > 0) {
-        filteredData = state.allReports.filter((entry) =>
-          filterVariables.countries.includes(entry.country as string)
-        );
-      }
-
-      if (filterVariables.sectors.length > 0) {
-        filteredData = state.allReports.filter((entry) =>
-          filterVariables.sectors.includes(entry.sector as string)
-        );
-      }
-
-      // if (filterVariables.reviewers.length > 0) {
-      //   filteredData = state.allReports.filter(entry => filterVariables.reviewers.includes(entry.reviewer as string))
-      // }
-
-      state.filteredReports = filteredData;
     },
     removeFilter: (state, action: PayloadAction<object>) => {
       const filterVariables = state.filterSettings;
@@ -121,26 +187,52 @@ export const reportsSlice = createSlice({
         field: string;
         value: string;
       };
-      switch (field) {
-        case "country":
-          filterVariables.countries = filterVariables.countries.filter(
-            (entry) => entry !== value
+
+      if (!state.loading) {
+        state.loading = true;
+
+        switch (field) {
+          case "country":
+            filterVariables.countries = filterVariables.countries.filter(
+              (entry) => entry !== value
+            );
+            break;
+          case "sector":
+            filterVariables.sectors = filterVariables.sectors.filter(
+              (entry) => entry !== value
+            );
+            break;
+          case "reviewer":
+            filterVariables.reviewers = filterVariables.reviewers.filter(
+              (entry) => entry !== value
+            );
+            break;
+          default:
+            break;
+        }
+
+        let filteredData = state.allReports;
+
+        if (filterVariables.countries.length > 0) {
+          filteredData = filteredData.filter((entry) =>
+            filterVariables.countries.includes(entry.country as string)
           );
-          break;
-        // case 'sectors': filterVariables.sectors.push(value); break;
-        // case 'reviewers': filterVariables.reviewers.push(value); break;
-        default:
-          break;
-      }
-      let filteredData = state.allReports;
+        }
+        if (filterVariables.sectors.length > 0) {
+          filteredData = filteredData.filter((entry) =>
+            filterVariables.sectors.includes(entry.sector as string)
+          );
+        }
+        if (filterVariables.reviewers.length > 0) {
+          filteredData = filteredData.filter((entry) =>
+            filterVariables.reviewers.includes(entry.reviewer as string)
+          );
+        }
 
-      if (filterVariables.countries.length > 0) {
-        filteredData = state.allReports.filter((entry) =>
-          filterVariables.countries.includes(entry.country as string)
-        );
+        state.filterSettings = filterVariables;
+        state.filteredReports = filteredData;
+        state.loading = false;
       }
-
-      state.filteredReports = filteredData;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -153,6 +245,18 @@ export const reportsSlice = createSlice({
       .addCase(getAllCompaniesAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.allReports = action.payload;
+        const filterOptions = {
+          countries: Array.from(
+            new Set(action.payload.map((report: any) => report.country))
+          ) as [],
+          sectors: Array.from(
+            new Set(action.payload.map((report: any) => report.sector))
+          ) as [],
+          reviewers: Array.from(
+            new Set(action.payload.map((report: any) => report.reviewer))
+          ) as [],
+        };
+        state.filterOptions = filterOptions;
         state.filteredReports = action.payload;
       })
       .addCase(getAllCompaniesAsync.rejected, (state) => {
@@ -169,6 +273,7 @@ export const {
   removeFilter,
 } = reportsSlice.actions;
 
+export const loading = (state: RootState) => state.reports.loading;
 export const allReports = (state: RootState) => state.reports.allReports;
 export const filteredReports = (state: RootState) =>
   state.reports.filteredReports;

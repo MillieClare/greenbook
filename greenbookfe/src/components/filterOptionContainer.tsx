@@ -8,16 +8,18 @@ import { useAppSelector, useAppDispatch } from "./../state/hooks";
 import {
   availableFilterOptions,
   filterSettings,
-  // filterByCountry,
+  filterByCountry,
   clearFilters,
   addFilter,
   removeFilter,
 } from "../state/features/reports/reportsSlice";
 import ButtonChip from "./buttonChip";
+import FilterChip from "./filterChip";
 
 const FilterOptionContainer = () => {
-  const { countries } = useAppSelector(availableFilterOptions);
-  const { sectors } = useAppSelector(availableFilterOptions);
+  const { countries, sectors, reviewers } = useAppSelector(
+    availableFilterOptions
+  );
   const filterConfiguration = useAppSelector(filterSettings);
   const dispatch = useAppDispatch();
 
@@ -37,136 +39,140 @@ const FilterOptionContainer = () => {
     }
   };
 
-  const clearFilter = (mode: string) => {
-    if (mode === "country") {
-      dispatch(clearFilters());
-    } else if (mode === "sector") {
-      dispatch(clearFilters());
+  const handleReviewerClick = (reviewer: string) => {
+    if (filterConfiguration.reviewers.includes(reviewer)) {
+      dispatch(removeFilter({ field: "reviewer", value: reviewer }));
+    } else {
+      dispatch(addFilter({ field: "reviewer", value: reviewer }));
     }
+  };
+
+  const clearFilter = (mode: string) => {
+    dispatch(clearFilters({ field: mode }));
   };
 
   return (
     <Grid container style={{ padding: 15 }}>
-      <Grid item style={{ paddingLeft: 15, paddingRight: 15, width: "100%" }}>
-        <Typography
-          gutterBottom
-          variant="h6"
-          component="div"
-          fontFamily={FontFamilies.Barlow}
-          color={Colors.dark}
-          sx={{
-            paddingBottom: 0,
-            alignItems: "center",
-            display: "flex",
-            color: Colors.darkGreen,
-          }}
-        >
-          <FilterAltRounded style={{ color: Colors.darkGreen }} />
-          {"Filter By Country"}
-        </Typography>
-      </Grid>
       {countries ? (
-        <Grid
-          item
-          style={{
-            marginBottom: 15,
-            paddingLeft: 15,
-            paddingRight: 15,
-            borderRadius: 15,
-          }}
-        >
+        <>
           <Grid
-            container
-            justifyContent="flex-start"
-            alignItems="center"
-            rowSpacing={1}
-            spacing={1}
+            item
+            style={{ paddingLeft: 15, paddingRight: 15, width: "100%" }}
           >
-            {countries.map((country: string, index: number) => {
-              // const selected = filterConfiguration?.field === 'country' && filterConfiguration?.value === country;
-              const selected = filterConfiguration.countries.includes(country);
-              return (
-                <CountryChip
-                  key={`${country}_chip_${index}`}
-                  onClick={() => {
-                    handleCountryClick(country);
-                  }}
-                  country={country}
-                  selected={selected}
-                />
-              );
-            })}
-            {filterConfiguration.countries.length > 0 ? (
-              <ButtonChip
-                tooltip={"Clear filters"}
-                label={"Clear"}
-                clear
-                onClick={() => {
-                  clearFilter("country");
-                }}
-              />
-            ) : null}
-          </Grid>
-        </Grid>
-      ) : null}
-      {sectors ? (
-        <Grid
-          item
-          style={{
-            marginBottom: 15,
-            paddingLeft: 15,
-            paddingRight: 15,
-            borderRadius: 15,
-          }}
-        >
-      <Grid
-            container
-            justifyContent="flex-start"
-            alignItems="center"
-            rowSpacing={1}
-            spacing={1}
-          >
-            <Grid
-              item
-              style={{ paddingLeft: 15, paddingRight: 15, width: "100%" }}
-            >
-              <Typography
-                gutterBottom
-                variant="h6"
-                component="div"
-                fontFamily={FontFamilies.Barlow}
-                color={Colors.dark}
-                sx={{
-                  paddingBottom: 0,
-                  paddingTop: 2,
-                  alignItems: "center",
-                  display: "flex",
-                  color: Colors.darkGreen,
-                }}
-              >
-                <FilterAltRounded style={{ color: Colors.darkGreen }} />
-                {"Filter By Sector"}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              style={{
-                marginBottom: 15,
-                paddingLeft: 15,
-                paddingRight: 15,
-                borderRadius: 15,
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              fontFamily={FontFamilies.Barlow}
+              color={Colors.dark}
+              sx={{
+                paddingBottom: 0,
+                alignItems: "center",
+                display: "flex",
+                color: Colors.darkGreen,
               }}
             >
-              {sectors.map((sector: string, index: number) => {
+              <FilterAltRounded style={{ color: Colors.darkGreen }} />
+              {filterConfiguration.countries.length > 0
+                ? "Filter By Countries"
+                : "Filter By Country"}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            style={{
+              marginBottom: 15,
+              paddingLeft: 15,
+              paddingRight: 15,
+              borderRadius: 15,
+            }}
+          >
+            <Grid
+              container
+              justifyContent="flex-start"
+              alignItems="center"
+              rowSpacing={1}
+              spacing={1}
+            >
+              {countries.map((country: string, index: number) => {
                 // const selected = filterConfiguration?.field === 'country' && filterConfiguration?.value === country;
-                const selected = filterConfiguration.sectors.includes(sector);
+                const selected =
+                  filterConfiguration.countries.includes(country);
                 return (
                   <CountryChip
+                    key={`${country}_chip_${index}`}
+                    onClick={() => {
+                      handleCountryClick(country);
+                    }}
+                    country={country}
+                    selected={selected}
+                  />
+                );
+              })}
+              {filterConfiguration.countries.length > 0 ? (
+                <ButtonChip
+                  tooltip={"Clear filters"}
+                  label={"Clear"}
+                  clear
+                  onClick={() => {
+                    clearFilter("country");
+                  }}
+                />
+              ) : null}
+            </Grid>
+          </Grid>
+        </>
+      ) : null}
+      {sectors ? (
+        <>
+          <Grid
+            item
+            style={{ paddingLeft: 15, paddingRight: 15, width: "100%" }}
+          >
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              fontFamily={FontFamilies.Barlow}
+              color={Colors.dark}
+              sx={{
+                paddingBottom: 0,
+                alignItems: "center",
+                display: "flex",
+                color: Colors.darkGreen,
+              }}
+            >
+              <FilterAltRounded style={{ color: Colors.darkGreen }} />
+              {filterConfiguration.sectors.length > 0
+                ? "Filter By Sectors"
+                : "Filter By Sector"}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            style={{
+              marginBottom: 15,
+              paddingLeft: 15,
+              paddingRight: 15,
+              borderRadius: 15,
+            }}
+          >
+            <Grid
+              container
+              justifyContent="flex-start"
+              alignItems="center"
+              rowSpacing={1}
+              spacing={1}
+            >
+              {sectors.map((sector: string, index: number) => {
+                const selected = filterConfiguration.sectors.includes(sector);
+                return (
+                  <FilterChip
                     key={`${sector}_chip_${index}`}
                     onClick={() => {
-                      handleCountryClick(sector);
+                      handleSectorClick(sector);
                     }}
-                    sector={sector}
+                    title={sector}
                     selected={selected}
                   />
                 );
@@ -183,7 +189,77 @@ const FilterOptionContainer = () => {
               ) : null}
             </Grid>
           </Grid>
-        ) : null}
+        </>
+      ) : null}
+      {reviewers ? (
+        <>
+          <Grid
+            item
+            style={{ paddingLeft: 15, paddingRight: 15, width: "100%" }}
+          >
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              fontFamily={FontFamilies.Barlow}
+              color={Colors.dark}
+              sx={{
+                paddingBottom: 0,
+                alignItems: "center",
+                display: "flex",
+                color: Colors.darkGreen,
+              }}
+            >
+              <FilterAltRounded style={{ color: Colors.darkGreen }} />
+              {filterConfiguration.reviewers.length > 0
+                ? "Filter By Reviewers"
+                : "Filter By Reviewer"}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            style={{
+              marginBottom: 15,
+              paddingLeft: 15,
+              paddingRight: 15,
+              borderRadius: 15,
+            }}
+          >
+            <Grid
+              container
+              justifyContent="flex-start"
+              alignItems="center"
+              rowSpacing={1}
+              spacing={1}
+            >
+              {reviewers.map((reviewer: string, index: number) => {
+                const selected =
+                  filterConfiguration.reviewers.includes(reviewer);
+                return (
+                  <FilterChip
+                    key={`${reviewer}_chip_${index}`}
+                    onClick={() => {
+                      handleReviewerClick(reviewer);
+                    }}
+                    title={reviewer}
+                    selected={selected}
+                  />
+                );
+              })}
+              {filterConfiguration.reviewers.length > 0 ? (
+                <ButtonChip
+                  tooltip={"Clear filters"}
+                  label={"Clear"}
+                  clear
+                  onClick={() => {
+                    clearFilter("reviewer");
+                  }}
+                />
+              ) : null}
+            </Grid>
+          </Grid>
+        </>
+      ) : null}
     </Grid>
   );
 };
