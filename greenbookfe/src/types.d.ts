@@ -5,6 +5,9 @@ interface IReport {
   sector?: string;
   reviewer?: string;
   reviewLink?: string;
+  marketInformationDate?: string;
+  marketInformationLink?: string;
+  sentimentScore?: number;
 }
 
 interface IFilterOptions {

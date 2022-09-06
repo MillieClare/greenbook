@@ -7,6 +7,7 @@ import {
   Paper,
   Tooltip,
   Popover,
+  Modal,
 } from "@mui/material";
 import CountryText from "./countryText";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
@@ -26,92 +27,197 @@ const Item = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  padding: 15,
+  backgroundColor: Colors.light,
+  // bgcolor: 'background.paper',
+  // border: '2px solid #000',
+  // boxShadow: 24,
+  // p: 4,
+};
+
 const ReviewCard = ({
-  link,
+  reviewLink,
   company,
   reviewer,
   country,
-  rating,
+  sentimentScore,
   sector,
+  marketInformationLink,
+  marketInformationDate,
 }: {
-  link?: string;
+  reviewLink?: string;
   company: string;
   sector?: string;
   reviewer?: string;
   country?: string;
-  rating?: number;
+  sentimentScore?: number;
+  marketInformationLink?: string;
+  marketInformationDate?: string;
 }) => {
-  const [downloadOpen, setDownloadMenuOpen] = useState(false);
+  // const [downloadOpen, setDownloadMenuOpen] = useState(false);
 
   const [anchorElement, setAnchorElement] =
     React.useState<HTMLButtonElement | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleDownloadButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     setAnchorElement(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorElement(null);
+  const handleMarketInfoClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setAnchorElement(event.currentTarget);
   };
+  const handleReviewClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElement(event.currentTarget);
+  };
+
+  // const handleClose = () => {
+  //     setAnchorElement(null);
+  // };
 
   const downloadMenuOpen = Boolean(anchorElement);
   const id = downloadMenuOpen ? "download-file-popover" : undefined;
 
   const renderDownloadButton = () => {
-    return (
-      <>
-        <Button
-          variant="contained"
-          endIcon={<FileDownload />}
-          disableElevation
-          fullWidth
-          onClick={handleClick}
-          style={{
-            fontFamily: FontFamilies.Montserrat,
-            backgroundColor: Colors.green,
-            color: "#FFFFFF",
-            fontWeight: "bold",
-            margin: 0,
-          }}
-        >
-          {downloadMenuOpen ? "Select File" : "Download"}
-        </Button>
-        <Popover
-          id={id}
-          open={downloadMenuOpen}
-          anchorEl={anchorElement}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          style={{ width: anchorElement?.clientWidth }}
-          elevation={0}
-        >
-          <div style={{ padding: 10, borderRadius: 10 }}>
+    if (marketInformationLink && reviewLink) {
+      return (
+        <>
+          <Button
+            variant="contained"
+            endIcon={<FileDownload />}
+            disableElevation
+            fullWidth
+            onClick={handleOpen}
+            style={{
+              fontFamily: FontFamilies.Montserrat,
+              backgroundColor: Colors.green,
+              color: "#FFFFFF",
+              fontWeight: "bold",
+              margin: 0,
+            }}
+          >
+            {downloadMenuOpen ? "Select File" : "Download"}
+          </Button>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            {/* <div style={{ padding: 10, borderRadius: 10 }}> */}
+            <div id={"download-modal"}>
+              <a
+                style={{ width: "100%" }}
+                href={reviewLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+              >
+                <Button
+                  variant="contained"
+                  endIcon={<PictureAsPdf />}
+                  disableElevation
+                  fullWidth
+                  onClick={handleReviewClick}
+                  style={{
+                    fontFamily: FontFamilies.Montserrat,
+                    backgroundColor: Colors.green,
+                    color: "#FFFFFF",
+                    fontWeight: "bold",
+                    margin: 0,
+                    marginBottom: 10,
+                  }}
+                >
+                  Review
+                </Button>
+              </a>
+              <a
+                style={{ width: "100%" }}
+                href={marketInformationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+              >
+                <Button
+                  variant="contained"
+                  endIcon={<PictureAsPdf />}
+                  disableElevation
+                  fullWidth
+                  onClick={handleMarketInfoClick}
+                  style={{
+                    fontFamily: FontFamilies.Montserrat,
+                    backgroundColor: Colors.green,
+                    color: "#FFFFFF",
+                    fontWeight: "bold",
+                    margin: 0,
+                  }}
+                >
+                  {`Market Information`}
+                </Button>
+              </a>
+            </div>
+          </Modal>
+        </>
+      );
+    } else if (marketInformationLink) {
+      return (
+        <>
+          <a
+            style={{ width: "100%" }}
+            href={marketInformationLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            download
+          >
             <Button
               variant="contained"
-              endIcon={<PictureAsPdf />}
+              endIcon={<FileDownload />}
               disableElevation
               fullWidth
-              onClick={handleClick}
+              onClick={handleMarketInfoClick}
               style={{
                 fontFamily: FontFamilies.Montserrat,
                 backgroundColor: Colors.green,
                 color: "#FFFFFF",
                 fontWeight: "bold",
                 margin: 0,
-                marginBottom: 10,
               }}
             >
-              1st April 2020
+              {"Download"}
             </Button>
+          </a>
+        </>
+      );
+    } else if (reviewLink) {
+      return (
+        <>
+          <a
+            style={{ width: "100%" }}
+            href={reviewLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            download
+          >
             <Button
               variant="contained"
-              endIcon={<PictureAsPdf />}
+              endIcon={<FileDownload />}
               disableElevation
               fullWidth
-              onClick={handleClick}
+              onClick={handleReviewClick}
               style={{
                 fontFamily: FontFamilies.Montserrat,
                 backgroundColor: Colors.green,
@@ -120,12 +226,12 @@ const ReviewCard = ({
                 margin: 0,
               }}
             >
-              1st January 2022
+              {"Download"}
             </Button>
-          </div>
-        </Popover>
-      </>
-    );
+          </a>
+        </>
+      );
+    }
   };
 
   return (
@@ -235,7 +341,9 @@ const ReviewCard = ({
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <Item item justifyContent="flex-start" alignItems="center">
-            {rating ? <CompanyRating rating={rating} /> : null}
+            {sentimentScore && sentimentScore === 1 ? (
+              <CompanyRating rating={sentimentScore} />
+            ) : null}
           </Item>
         </Grid>
         <Grid
@@ -249,7 +357,7 @@ const ReviewCard = ({
           alignItems={"center"}
           style={{ padding: 16 }}
         >
-          {link ? (
+          {reviewLink ? (
             renderDownloadButton()
           ) : (
             <Button

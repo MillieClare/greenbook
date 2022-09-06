@@ -28,18 +28,27 @@ const ReportsContainer = () => {
           {reports
             .slice(resultsPerPage * page, resultsPerPage * (page + 1))
             .map((entry: IReport, index: number) => {
-              const { companyName, country, reviewer, reviewLink, sector } =
-                entry;
-              const rating = (Math.floor(Math.random() * 11) + 1) / 2;
+              const {
+                companyName,
+                country,
+                reviewer,
+                reviewLink,
+                sector,
+                marketInformationDate,
+                marketInformationLink,
+                sentimentScore,
+              } = entry;
               return (
                 <ReviewCard
                   key={`Review_card_${index}`}
                   company={companyName}
                   country={country}
-                  link={reviewLink}
+                  reviewLink={reviewLink}
                   reviewer={reviewer}
-                  rating={rating}
+                  marketInformationDate={marketInformationDate}
+                  marketInformationLink={marketInformationLink}
                   sector={sector}
+                  sentimentScore={sentimentScore}
                 />
               );
             })}

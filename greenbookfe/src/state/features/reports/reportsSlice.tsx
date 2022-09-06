@@ -247,15 +247,16 @@ export const reportsSlice = createSlice({
         state.allReports = action.payload;
         const filterOptions = {
           countries: Array.from(
-            new Set(action.payload.map((report: any) => report.country))
+            new Set(action.payload.map((report: any) => report.country.trim()))
           ) as [],
           sectors: Array.from(
-            new Set(action.payload.map((report: any) => report.sector))
+            new Set(action.payload.map((report: any) => report.sector.trim()))
           ) as [],
           reviewers: Array.from(
-            new Set(action.payload.map((report: any) => report.reviewer))
+            new Set(action.payload.map((report: any) => report.reviewer.trim()))
           ) as [],
         };
+        console.log(filterOptions.countries);
         state.filterOptions = filterOptions;
         state.filteredReports = action.payload;
       })
