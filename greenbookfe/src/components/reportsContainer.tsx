@@ -5,14 +5,14 @@ import { useAppSelector } from "./../state/hooks";
 import { filteredReports } from "../state/features/reports/reportsSlice";
 import NoResultsScreen from "./noResultsScreen";
 import { useState } from "react";
-import { FontFamilies } from "../styles/fonts/fontFamilies";
-import { Colors } from "../styles/colors";
+// import { FontFamilies } from "../styles/fonts/fontFamilies";
+// import { Colors } from "../styles/colors";
 
 const resultsPerPage = 21;
 
 const ReportsContainer = () => {
   const reports = useAppSelector(filteredReports);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const handlePaginationChange = (
     event: React.ChangeEvent<unknown>,
@@ -26,7 +26,7 @@ const ReportsContainer = () => {
       <>
         <Grid container spacing={4}>
           {reports
-            .slice(resultsPerPage * page, resultsPerPage * (page + 1))
+            .slice(resultsPerPage * (page - 1), resultsPerPage * page)
             .map((entry: IReport, index: number) => {
               const {
                 companyName,

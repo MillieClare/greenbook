@@ -24,3 +24,7 @@ code {
     background-color: #ffffff;
     border-radius: 15px;
 }
+
+.download-link {
+    text-decoration: none;
+}

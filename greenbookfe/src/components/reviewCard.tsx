@@ -151,6 +151,7 @@ const ReviewCard = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 download
+                download-link
               >
                 <Button
                   variant="contained"
@@ -182,6 +183,7 @@ const ReviewCard = ({
             target="_blank"
             rel="noopener noreferrer"
             download
+            download-link
           >
             <Button
               variant="contained"
@@ -211,6 +213,7 @@ const ReviewCard = ({
             target="_blank"
             rel="noopener noreferrer"
             download
+            download-link
           >
             <Button
               variant="contained"
