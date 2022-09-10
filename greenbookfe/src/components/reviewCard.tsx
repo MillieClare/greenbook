@@ -109,7 +109,7 @@ const ReviewCard = ({
               margin: 0,
             }}
           >
-            {downloadMenuOpen ? "Select File" : "Download"}
+            Choose file
           </Button>
 
           <Modal
