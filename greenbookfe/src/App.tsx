@@ -9,6 +9,9 @@ import { useAppSelector } from "./state/hooks";
 import { allReports, loading } from "./state/features/reports/reportsSlice";
 import LoadingScreen from "./components/loadingScreen";
 import LoadingOverlay from "./components/loadingOverlay";
+import RadarChart from "./components/charts/radarChart";
+import RadarChartContainer from "./components/radarChartContainer";
+import SectorRadarChartContainer from "./components/sectorRadarChartContainer";
 
 const theme = createTheme({
   palette: {
@@ -35,6 +38,9 @@ function App() {
         ) : (
           <LoadingScreen />
         )}
+      </ContentContainer>
+      <ContentContainer backgroundFilled={false}>
+        <SectorRadarChartContainer />
       </ContentContainer>
       <ToastContainer
         position="top-center"

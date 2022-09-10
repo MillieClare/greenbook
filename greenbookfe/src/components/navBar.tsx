@@ -16,6 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterOptionContainer from "./filterOptionContainer";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import SearchBar from "./searchBar";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 const NavBar = ({ hideFilters }: { hideFilters: boolean }) => {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false);
@@ -51,6 +52,15 @@ const NavBar = ({ hideFilters }: { hideFilters: boolean }) => {
               }}
             />
           )}
+          <Chip
+            icon={<AutoGraphIcon style={{ color: Colors.darkGreen }} />}
+            variant="outlined"
+            sx={{
+              fontFamily: FontFamilies.Montserrat,
+              borderColor: "transparent",
+            }}
+            label="Graphs"
+          />
         </Toolbar>
       </AppBar>
       {isFilterMenuOpen ? <FilterOptionContainer /> : null}
