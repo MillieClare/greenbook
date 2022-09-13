@@ -11,6 +11,7 @@ const GreenBookLogo = () => {
         y="0px"
         height={50}
         viewBox="0 0 606.5 226.9"
+        className="brand-logo"
       >
         <g>
           <g>

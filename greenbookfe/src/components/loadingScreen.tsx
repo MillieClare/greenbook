@@ -6,7 +6,11 @@ import { Colors } from "./../styles/colors";
 import { useEffect } from "react";
 
 import { useAppDispatch } from "./../state/hooks";
-import { getAllCompaniesAsync } from "../state/features/reports/reportsSlice";
+import {
+  getAllCompaniesAsync,
+  getAllReportGraphDataAsync,
+  getAllSectorGraphDataAsync,
+} from "../state/features/reports/reportsSlice";
 
 import { useLottie } from "lottie-react";
 import animation from "./../assets/animations/loadingAnimation.json";
@@ -28,6 +32,8 @@ const LoadingScreen = () => {
   useEffect(() => {
     console.log("LOADING");
     dispatch(getAllCompaniesAsync());
+    dispatch(getAllSectorGraphDataAsync());
+    dispatch(getAllReportGraphDataAsync());
   }, []);
 
   return (

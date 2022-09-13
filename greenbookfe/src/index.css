@@ -28,3 +28,7 @@ code {
 .download-link {
     text-decoration: none;
 }
+
+.brand-logo:hover {
+    cursor: pointer;
+}

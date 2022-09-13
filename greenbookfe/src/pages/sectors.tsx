@@ -8,6 +8,7 @@ import { allSectorGraphData } from "../state/features/reports/reportsSlice";
 import SectorsContainer from "../components/sectorsContainer";
 
 const Sectors = () => {
+  console.log("blah");
   const graphData = useAppSelector(allSectorGraphData);
   console.log({ graphData });
   return (

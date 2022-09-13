@@ -75,7 +75,9 @@ const ReportsContainer = () => {
   } else {
     return (
       <Grid container alignItems={"space-between"} justifyContent={"center"}>
-        <NoResultsScreen />
+        <NoResultsScreen
+          message={`There doesn't seem to be any results for that search!`}
+        />
       </Grid>
     );
   }
