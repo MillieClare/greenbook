@@ -2,11 +2,12 @@ import { Typography, Grid } from "@mui/material";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import { Colors } from "./../styles/colors";
 import { useLottie } from "lottie-react";
-import animation from "./../assets/animations/loadingAnimation.json";
+import loadingAnimation from "./../assets/animations/loadingAnimation.json";
+import emptyAnimation from "./../assets/animations/emptyAnimation.json";
 
-const Animation = () => {
+const LoadingAnimation = () => {
   const config = {
-    animationData: animation,
+    animationData: loadingAnimation,
     loop: true,
   };
 
@@ -15,11 +16,29 @@ const Animation = () => {
   return <>{View}</>;
 };
 
-const NoResultsScreen = () => {
+const EmptyAnimation = () => {
+  const config = {
+    animationData: emptyAnimation,
+    loop: true,
+    style: { height: 350 },
+  };
+
+  const { View } = useLottie(config);
+
+  return <>{View}</>;
+};
+
+const NoResultsScreen = ({
+  message,
+  loading = true,
+}: {
+  message: string;
+  loading?: boolean;
+}) => {
   return (
     <Grid container spacing={0} direction="column" alignItems="center">
       <Grid item xs={12} md={12} justifyContent={"center"} alignSelf={"center"}>
-        <Animation />
+        {loading ? <LoadingAnimation /> : <EmptyAnimation />}
         <Typography
           variant="h6"
           textAlign={"center"}
@@ -36,7 +55,7 @@ const NoResultsScreen = () => {
           fontFamily={FontFamilies.Barlow}
           color={Colors.darkGreen}
         >
-          There doesn't seem to be any results for that search!
+          {message}
         </Typography>
       </Grid>
     </Grid>
