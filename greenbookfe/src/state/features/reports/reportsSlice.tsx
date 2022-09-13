@@ -6,13 +6,18 @@ import { toast } from "react-toastify";
 import { getCountryString } from "../../../utilities/countryFormat";
 import getAllCompanies from "../../requests/getAllCompanies";
 
-import { fetchAllCompanies, fetchAllSectorGraphData } from "./reportsAPI";
+import {
+  fetchAllCompanies,
+  fetchAllSectorGraphData,
+  fetchAllReportGraphData,
+} from "./reportsAPI";
 
 export interface ReportsState {
   value: number;
   allReports: IReport[];
   filteredReports: IReport[];
   allSectorGraphData: any[];
+  allReportGraphData: any[];
   filterOptions: { countries?: string[]; sectors?: []; reviewers?: [] };
   filterSettings: {
     countries: string[];
@@ -32,6 +37,7 @@ const initialState: ReportsState = {
   loading: false,
   allReports: [],
   allSectorGraphData: [],
+  allReportGraphData: [],
   filteredReports: [],
   filterOptions: { countries: [], sectors: [], reviewers: [] },
   filterSettings: { countries: [], sectors: [], reviewers: [] },
@@ -53,6 +59,15 @@ export const getAllSectorGraphDataAsync = createAsyncThunk(
     // The value we return becomes the `fulfilled` action payload
     console.log({ response });
     return response.sectorWords;
+  }
+);
+export const getAllReportGraphDataAsync = createAsyncThunk(
+  "reports/fetchAllReportGraphData",
+  async () => {
+    const response = await fetchAllReportGraphData();
+    // The value we return becomes the `fulfilled` action payload
+    // console.log({response})
+    return response.graphData;
   }
 );
 
@@ -285,6 +300,17 @@ export const reportsSlice = createSlice({
       })
       .addCase(getAllSectorGraphDataAsync.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(getAllReportGraphDataAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllReportGraphDataAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.allReportGraphData = action.payload;
+        console.log(state.allReportGraphData);
+      })
+      .addCase(getAllReportGraphDataAsync.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });
@@ -301,6 +327,9 @@ export const loading = (state: RootState) => state.reports.loading;
 export const allReports = (state: RootState) => state.reports.allReports;
 export const allSectorGraphData = (state: RootState) =>
   state.reports.allSectorGraphData;
+export const allReportGraphData = (state: RootState) =>
+  state.reports.allReportGraphData;
+
 export const filteredReports = (state: RootState) =>
   state.reports.filteredReports;
 export const availableFilterOptions = (state: RootState) =>
