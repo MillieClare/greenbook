@@ -39,6 +39,7 @@ export default function App() {
         <Routes>
           <Route path="/greenbook" element={<Home />}></Route>
           <Route path="/greenbook/sectors" element={<Sectors />}></Route>
+          <Route path="*" element={<Home />}></Route>
         </Routes>
 
         <ToastContainer
