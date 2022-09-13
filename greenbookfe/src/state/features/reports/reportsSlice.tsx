@@ -6,12 +6,13 @@ import { toast } from "react-toastify";
 import { getCountryString } from "../../../utilities/countryFormat";
 import getAllCompanies from "../../requests/getAllCompanies";
 
-import { fetchAllCompanies } from "./reportsAPI";
+import { fetchAllCompanies, fetchAllSectorGraphData } from "./reportsAPI";
 
 export interface ReportsState {
   value: number;
   allReports: IReport[];
   filteredReports: IReport[];
+  allSectorGraphData: any[];
   filterOptions: { countries?: string[]; sectors?: []; reviewers?: [] };
   filterSettings: {
     countries: string[];
@@ -30,6 +31,7 @@ const initialState: ReportsState = {
   value: 0,
   loading: false,
   allReports: [],
+  allSectorGraphData: [],
   filteredReports: [],
   filterOptions: { countries: [], sectors: [], reviewers: [] },
   filterSettings: { countries: [], sectors: [], reviewers: [] },
@@ -41,6 +43,16 @@ export const getAllCompaniesAsync = createAsyncThunk(
     const response = await fetchAllCompanies();
     // The value we return becomes the `fulfilled` action payload
     return response.companies;
+  }
+);
+
+export const getAllSectorGraphDataAsync = createAsyncThunk(
+  "reports/fetchAllSectorGraphData",
+  async () => {
+    const response = await fetchAllSectorGraphData();
+    // The value we return becomes the `fulfilled` action payload
+    console.log({ response });
+    return response.sectorWords;
   }
 );
 
@@ -262,6 +274,17 @@ export const reportsSlice = createSlice({
       })
       .addCase(getAllCompaniesAsync.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(getAllSectorGraphDataAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllSectorGraphDataAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.allSectorGraphData = action.payload;
+        console.log(state.allSectorGraphData);
+      })
+      .addCase(getAllSectorGraphDataAsync.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });
@@ -276,6 +299,8 @@ export const {
 
 export const loading = (state: RootState) => state.reports.loading;
 export const allReports = (state: RootState) => state.reports.allReports;
+export const allSectorGraphData = (state: RootState) =>
+  state.reports.allSectorGraphData;
 export const filteredReports = (state: RootState) =>
   state.reports.filteredReports;
 export const availableFilterOptions = (state: RootState) =>

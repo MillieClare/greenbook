@@ -1,13 +1,9 @@
 import axios from "axios";
 
-type GetCompaniesResponse = {
-  data: IReport[];
-};
-
-const getAllCompanies = async () => {
+const getAllReportGraphData = async () => {
   try {
     const { data, status } = await axios.get<any>(
-      "https://greenbookbe.herokuapp.com/companies",
+      "https://greenbookbe.herokuapp.com/graphdata",
       {
         headers: {
           Accept: "application/json",
@@ -24,4 +20,4 @@ const getAllCompanies = async () => {
   }
 };
 
-export default getAllCompanies;
+export default getAllReportGraphData;

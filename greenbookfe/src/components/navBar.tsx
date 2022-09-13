@@ -35,32 +35,37 @@ const NavBar = ({ hideFilters }: { hideFilters: boolean }) => {
           <GreenBookLogo />
           {hideFilters ? null : <SearchBar />}
           {hideFilters ? null : (
-            <Chip
-              icon={
-                isFilterMenuOpen ? (
-                  <FilterAltOffRounded style={{ color: Colors.darkGreen }} />
-                ) : (
-                  <FilterAltRounded style={{ color: Colors.darkGreen }} />
-                )
-              }
-              label={isFilterMenuOpen ? "Close Filters" : "Open Filters"}
-              onClick={handleFilterPress}
-              variant="outlined"
-              sx={{
-                fontFamily: FontFamilies.Montserrat,
-                borderColor: "transparent",
-              }}
-            />
+            <>
+              <Chip
+                icon={
+                  isFilterMenuOpen ? (
+                    <FilterAltOffRounded style={{ color: Colors.darkGreen }} />
+                  ) : (
+                    <FilterAltRounded style={{ color: Colors.darkGreen }} />
+                  )
+                }
+                label={isFilterMenuOpen ? "Close Filters" : "Open Filters"}
+                onClick={handleFilterPress}
+                variant="outlined"
+                sx={{
+                  fontFamily: FontFamilies.Montserrat,
+                  borderColor: "transparent",
+                }}
+              />
+              <Chip
+                icon={<AutoGraphIcon style={{ color: Colors.darkGreen }} />}
+                onClick={() =>
+                  (window.location.href = "/greenbook/sectorGraphs")
+                }
+                variant="outlined"
+                sx={{
+                  fontFamily: FontFamilies.Montserrat,
+                  borderColor: "transparent",
+                }}
+                label="Sector graphs"
+              />
+            </>
           )}
-          <Chip
-            icon={<AutoGraphIcon style={{ color: Colors.darkGreen }} />}
-            variant="outlined"
-            sx={{
-              fontFamily: FontFamilies.Montserrat,
-              borderColor: "transparent",
-            }}
-            label="Graphs"
-          />
         </Toolbar>
       </AppBar>
       {isFilterMenuOpen ? <FilterOptionContainer /> : null}

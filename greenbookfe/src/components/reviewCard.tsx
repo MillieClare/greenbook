@@ -22,6 +22,7 @@ import { styled } from "@mui/material/styles";
 import { getCountryFlag } from "../utilities/countryFormat";
 import { useState } from "react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -61,6 +62,7 @@ const ReviewCard = ({
   marketInformationDate?: string;
 }) => {
   // const [downloadOpen, setDownloadMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [anchorElement, setAnchorElement] =
     React.useState<HTMLButtonElement | null>(null);
@@ -125,7 +127,7 @@ const ReviewCard = ({
                 href={reviewLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                download
+                className="download-link"
               >
                 <Button
                   variant="contained"
@@ -150,8 +152,7 @@ const ReviewCard = ({
                 href={marketInformationLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                download
-                download-link
+                className="download-link"
               >
                 <Button
                   variant="contained"
@@ -182,8 +183,7 @@ const ReviewCard = ({
             href={marketInformationLink}
             target="_blank"
             rel="noopener noreferrer"
-            download
-            download-link
+            className="download-link"
           >
             <Button
               variant="contained"
@@ -212,8 +212,7 @@ const ReviewCard = ({
             href={reviewLink}
             target="_blank"
             rel="noopener noreferrer"
-            download
-            download-link
+            className="download-link"
           >
             <Button
               variant="contained"
@@ -252,6 +251,9 @@ const ReviewCard = ({
           backgroundColor: "rgb(92, 219, 149,0.25)",
           borderRadius: 10,
           overflow: "hidden",
+        }}
+        onClick={() => {
+          navigate(`/greenbook/${company}`);
         }}
       >
         <Grid item xs={12} lg={7}>

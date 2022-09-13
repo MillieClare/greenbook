@@ -1,25 +1,21 @@
 import * as React from "react";
 import ContentContainer from "../components/contentContainer";
 import { useAppSelector } from "../state/hooks";
-import { allReports, loading } from "../state/features/reports/reportsSlice";
 import ReportsContainer from "../components/reportsContainer";
 import LoadingScreen from "../components/loadingScreen";
-import LoadingOverlay from "../components/loadingOverlay";
-
 import NavBar from "../components/navBar";
+import { allSectorGraphData } from "../state/features/reports/reportsSlice";
+import SectorsContainer from "../components/sectorsContainer";
 
-const Home = () => {
-  const reports = useAppSelector(allReports);
-  const isReportsLoading = useAppSelector(loading);
-
+const Sectors = () => {
+  const graphData = useAppSelector(allSectorGraphData);
+  console.log({ graphData });
   return (
     <React.Fragment>
-      <NavBar hideFilters={reports.length === 0} />
-      {isReportsLoading ? <LoadingOverlay /> : null}
-
+      <NavBar hideFilters={graphData.length === 0} />
       <ContentContainer backgroundFilled={false}>
-        {reports && reports.length > 0 ? (
-          <ReportsContainer />
+        {graphData && graphData.length > 0 ? (
+          <SectorsContainer />
         ) : (
           <LoadingScreen />
         )}
@@ -28,4 +24,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Sectors;

@@ -1,19 +1,16 @@
 import axios from "axios";
 
-type GetCompaniesResponse = {
-  data: IReport[];
-};
-
-const getAllCompanies = async () => {
+const getAllSectorGraphData = async () => {
   try {
     const { data, status } = await axios.get<any>(
-      "https://greenbookbe.herokuapp.com/companies",
+      "https://greenbookbe.herokuapp.com/sectorword",
       {
         headers: {
           Accept: "application/json",
         },
       }
     );
+    console.log({ data });
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -24,4 +21,4 @@ const getAllCompanies = async () => {
   }
 };
 
-export default getAllCompanies;
+export default getAllSectorGraphData;

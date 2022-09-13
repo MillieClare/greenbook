@@ -13,7 +13,8 @@ import RadarChartContainer from "./components/radarChartContainer";
 import SectorRadarChartContainer from "./components/sectorRadarChartContainer";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "@mui/icons-material";
+import Home from "./pages/home";
+import Sectors from "./pages/sectors";
 
 const theme = createTheme({
   palette: {
@@ -27,22 +28,17 @@ const theme = createTheme({
 });
 
 export default function App() {
-  const reports = useAppSelector(allReports);
+  // const reports = useAppSelector(allReports);
   const isReportsLoading = useAppSelector(loading);
 
   return (
     <ThemeProvider theme={theme}>
       {/* <NavBar hideFilters={reports.length === 0} /> */}
-      {/* {isReportsLoading ? <LoadingOverlay /> : null} */}
+      {isReportsLoading ? <LoadingOverlay /> : null}
       <Router>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-
-          {/* <Route path="/graphs">
-          <ContentContainer backgroundFilled={false}>
-            <SectorRadarChartContainer />
-          </ContentContainer>
-        </Route> */}
+          <Route path="/greenbook" element={<Home />}></Route>
+          <Route path="/greenbook/sectors" element={<Sectors />}></Route>
         </Routes>
 
         <ToastContainer

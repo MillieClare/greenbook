@@ -1,96 +1,5 @@
-import { Grid, Pagination } from "@mui/material";
-import { useEffect, useState } from "react";
-import RadarChart from "./charts/radarChart";
-
-// const data = [{
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "ABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 5,
-//         "environmental": 10,
-//         "management": 15,
-//         "party": 20,
-//         "buildings": 25,
-//         "sustainability": 30
-//     }
-// }, {
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "BABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 48,
-//         "environmental": 24,
-//         "management": 32,
-//         "party": 16,
-//         "buildings": 8,
-//         "sustainability": 40
-//     }
-// }, {
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "CABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 6,
-//         "environmental": 18,
-//         "management": 30,
-//         "party": 36,
-//         "buildings": 0,
-//         "sustainability": 12
-//     }
-// }, {
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "DABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 51,
-//         "environmental": 32.5378277861242,
-//         "management": 15.73553116878063,
-//         "party": 35.37153650105044,
-//         "buildings": 1.1823215567939547,
-//         "sustainability": 29.487406431175053
-//     }
-// }, {
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "BABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 48,
-//         "environmental": 24,
-//         "management": 32,
-//         "party": 16,
-//         "buildings": 8,
-//         "sustainability": 40
-//     }
-// }, {
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "CABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 6,
-//         "environmental": 18,
-//         "management": 30,
-//         "party": 36,
-//         "buildings": 0,
-//         "sustainability": 12
-//     }
-// }, {
-//     "_id": "631240a48146e9e7c05400e4",
-//     "companyName": "DABANCA",
-//     "sentimentScore": 1,
-//     "topCompanyWords": {
-//         "energy": 51,
-//         "environmental": 32.5378277861242,
-//         "management": 15.73553116878063,
-//         "party": 35.37153650105044,
-//         "buildings": 1.1823215567939547,
-//         "sustainability": 29.487406431175053
-//     }
-// }]
-
 const data = [
   {
-    "Financial Institution": "Financial Institution",
     "ABANCACorporacinBancariaS.txt": {
       energy: 51,
       environmental: 32.5378277861242,
@@ -574,165 +483,22 @@ const data = [
   },
 ];
 
-const maxReportsToDisplay = 4;
+// get list of all values for one word i.e. energy
+// get min/max values for that one word
+// normalise all values based on the max
+// change max value to be capped at 10%
+// normalise based on the 90%
+// flatten all values above the 90% value to 1
 
-type Props = {
-  type?: string;
+const CompanyChartContainer = (data: any) => {
+  let wordCount;
+  for (let i = 0; i < 6; i++) {
+    wordCount = i;
+    const getWordValues = data.filter((word: any) => {
+      const keys = Object.keys(word);
+      console.log(word);
+    });
+  }
 };
 
-const RadarChartContainer = ({ type }: Props) => {
-  const [dataToDisplay, setDataToDisplay] = useState<any>([]);
-  const [page, setPage] = useState(1);
-  const [yAxis, setYAxis] = useState({ minimum: 0, maximum: 0 });
-
-  const handlePaginationChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    console.log({ value });
-    setPage(value);
-  };
-
-  // console.log(data.length);
-
-  const getMinimumMaximum = async (targetData: any) => {
-    let minimum = 0;
-    let maximum = 0;
-    targetData.forEach((entry: any) => {
-      let arr: number[] = Object.values(entry.topCompanyWords);
-      // let minValue = Math.min(...arr);
-      let maxValue = Math.max(...arr);
-      // if (minimum > minValue) {
-      //     minimum = minValue;
-      // }
-      if (maximum < maxValue) {
-        maximum = maxValue;
-      }
-    });
-    // console.log({ targetData });
-    // console.log({ maximum });
-
-    setYAxis({ minimum, maximum });
-  };
-
-  // const sortArray = async (order: string) => {
-  //     if (order === 'asc') {
-  //     }
-  //     console.log({ data })
-  //     getMinimumMaximum(data.slice(0, 3)).then(() => {
-  //         console.log('ere    ')
-  //         return data.slice(0, 3)
-  //     })
-  // }
-
-  const range = [0, 1];
-
-  const normaliseObject = (data: any) => {
-    let minMax = { min: 0, max: 0 };
-    Object.keys(data).forEach((key) => {
-      const values: number[] = Object.values(data[key]);
-      const min = Math.min.apply(Math, values);
-      const max = Math.max.apply(Math, values);
-      if (min < minMax.min) {
-        minMax.min = min;
-      }
-
-      if (max > minMax.max) {
-        minMax.max = max;
-      }
-    });
-    const variation = (range[1] - range[0]) / (minMax.max - minMax.min);
-  };
-
-  const sortArray = async (order: string) => {
-    return new Promise((resolve, reject) => {
-      let processedData = [...data]; //Clone variable
-      if (order === "asc") {
-        processedData.sort((a: any, b: any) => {
-          let topWordsA: number[] = Object.values(a.topCompanyWords);
-          let topWordsB: number[] = Object.values(b.topCompanyWords);
-          let averageA =
-            topWordsA.reduce((x: any, y: any) => x + y) / topWordsA.length;
-          let averageB =
-            topWordsB.reduce((x: any, y: any) => x + y) / topWordsB.length;
-          return averageA - averageB;
-        });
-      } else {
-        processedData.sort((a: any, b: any) => {
-          let topWordsA: number[] = Object.values(a.topCompanyWords);
-          let topWordsB: number[] = Object.values(b.topCompanyWords);
-          let averageA =
-            topWordsA.reduce((x: any, y: any) => x + y) / topWordsA.length;
-          let averageB =
-            topWordsB.reduce((x: any, y: any) => x + y) / topWordsB.length;
-          return averageB - averageA;
-        });
-      }
-      getMinimumMaximum(processedData.slice(0, 4)).then(() => {
-        return resolve(processedData.slice(0, 4));
-      });
-    });
-  };
-
-  useEffect(() => {
-    setDataToDisplay(
-      data.slice(maxReportsToDisplay * (page - 1), maxReportsToDisplay * page)
-    );
-  }, [page]);
-
-  useEffect(() => {
-    if (!type) {
-      getMinimumMaximum(data).then(() => {
-        setDataToDisplay(
-          data.slice(
-            maxReportsToDisplay * (page - 1),
-            maxReportsToDisplay * page
-          )
-        );
-      });
-    } else {
-      if (type === "best") {
-        sortArray("des").then((sortedArray: any) => {
-          setDataToDisplay(sortedArray);
-        });
-      } else if (type === "worst") {
-        sortArray("asc").then((sortedArray: any) => {
-          setDataToDisplay(sortedArray);
-        });
-      }
-    }
-  }, []);
-
-  return (
-    <Grid item xs={12} md={4} style={{ padding: 10 }}>
-      {dataToDisplay?.length > 0 ? (
-        <>
-          <RadarChart
-            data={dataToDisplay}
-            minimum={yAxis.minimum}
-            maximum={yAxis.maximum}
-          />
-
-          {!type && data.length > maxReportsToDisplay ? (
-            <Grid
-              container
-              style={{ width: "100%", paddingTop: 15 }}
-              alignContent={"center"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              justifyItems={"center"}
-            >
-              <Pagination
-                count={Math.ceil(data.length / maxReportsToDisplay)}
-                page={page}
-                onChange={handlePaginationChange}
-              />
-            </Grid>
-          ) : null}
-        </>
-      ) : null}
-    </Grid>
-  );
-};
-
-export default RadarChartContainer;
+export default CompanyChartContainer;
