@@ -54,15 +54,15 @@ const NavBar = ({ hideFilters }: { hideFilters: boolean }) => {
               />
               <Chip
                 icon={<AutoGraphIcon style={{ color: Colors.darkGreen }} />}
-                onClick={() =>
-                  (window.location.href = "/greenbook/sectorGraphs")
-                }
                 variant="outlined"
+                component="a"
                 sx={{
                   fontFamily: FontFamilies.Montserrat,
                   borderColor: "transparent",
                 }}
-                label="Sector graphs"
+                href="/greenbook/sectors"
+                label="Graphs"
+                clickable
               />
             </>
           )}
