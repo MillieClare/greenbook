@@ -6,8 +6,9 @@ import { allSectorGraphData } from "../state/features/reports/reportsSlice";
 import NoResultsScreen from "./noResultsScreen";
 import { useEffect, useState } from "react";
 import SectorGalleryRadarChart from "./charts/sectorGalleryRadarChart";
-import SectorFilterDropdown from "./sectorFilterDropdown";
+import SectorFilterDropdown from "./sectorFilterDropDown";
 import LoadingOverlay from "./loadingOverlay";
+import SectorWordFrequencyChart from "./charts/sectorWordFrequencyChart";
 
 const SectorsContainer = () => {
   const sectors = useAppSelector(allSectorGraphData);
@@ -70,6 +71,14 @@ const SectorsContainer = () => {
       <>
         {busy ? <LoadingOverlay /> : null}
         <Grid container spacing={4}>
+          <Grid
+            item
+            xs={12}
+            margin={"auto"}
+            style={{ padding: 10, marginBottom: 20 }}
+          >
+            <SectorWordFrequencyChart data={processedSectors} />
+          </Grid>
           <Grid
             item
             xs={12}

@@ -1,5 +1,6 @@
 interface IReport {
-  // id: number;
+  id: number;
+  _id: string;
   companyName: string;
   country?: string;
   sector?: string;

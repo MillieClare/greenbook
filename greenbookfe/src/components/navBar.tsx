@@ -25,7 +25,6 @@ import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import WorkIcon from "@mui/icons-material/Work";
 import { Link } from "react-router-dom";
@@ -83,6 +82,7 @@ const NavBar = ({ hideFilters }: { hideFilters: boolean }) => {
                   borderColor: "transparent",
                 }}
                 // href="/greenbook/sectors"
+                onClick={handleGraphMenuClick}
                 label="Graphs"
                 clickable
               />

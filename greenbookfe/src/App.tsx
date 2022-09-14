@@ -15,6 +15,7 @@ import SectorRadarChartContainer from "./components/sectorRadarChartContainer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Sectors from "./pages/sectors";
+import Company from "./pages/company";
 
 const theme = createTheme({
   palette: {
@@ -38,6 +39,8 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/greenbook" element={<Home />}></Route>
+          <Route path="/greenbook/company/" element={<Home />}></Route>
+          <Route path="/greenbook/company/:id" element={<Company />}></Route>
           <Route path="/greenbook/sectors" element={<Sectors />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
