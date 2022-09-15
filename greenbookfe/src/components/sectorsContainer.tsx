@@ -65,7 +65,6 @@ const SectorsContainer = () => {
     }
   }, [filteredWords, sectors]);
 
-  console.log("........................ processed", processedSectors);
   if (processedSectors.length > 0) {
     return (
       <>
@@ -77,7 +76,6 @@ const SectorsContainer = () => {
               filteredWords={filteredWords}
               onChange={(value) => {
                 setFilteredWords(value);
-                // console.log(filteredWords);
               }}
             />
           </Grid>
@@ -121,7 +119,6 @@ const SectorsContainer = () => {
                 filteredWords={filteredWords}
                 onChange={(value) => {
                   setFilteredWords(value);
-                  // console.log(filteredWords);
                 }}
               />
             </Grid>

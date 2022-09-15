@@ -43,7 +43,6 @@ const Company = () => {
 
   const sentimentScoreText = `How positive the language of the report is. 'Positive' means the language used is favourable towards the bond, 'Negative' means it is not, and 'Neutral' means it is mixed.`;
 
-  console.log(companyData, sectorData, wordValueData);
   return (
     <React.Fragment>
       <NavBar hideFilters={reports.length === 0} />

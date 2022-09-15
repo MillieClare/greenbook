@@ -51,7 +51,6 @@ export const getAllSectorGraphDataAsync = createAsyncThunk(
   async () => {
     const response = await fetchAllSectorGraphData();
     // The value we return becomes the `fulfilled` action payload
-    // console.log({ response });
     return response.sectorWords;
   }
 );
@@ -60,7 +59,6 @@ export const getAllReportGraphDataAsync = createAsyncThunk(
   async () => {
     const response = await fetchAllReportGraphData();
     // The value we return becomes the `fulfilled` action payload
-    // console.log({response})
     return response.graphData;
   }
 );
@@ -277,7 +275,6 @@ export const reportsSlice = createSlice({
             new Set(action.payload.map((report: any) => report.reviewer.trim()))
           ) as [],
         };
-        // console.log(filterOptions.countries);
         state.filterOptions = filterOptions;
         state.filteredReports = action.payload;
       })

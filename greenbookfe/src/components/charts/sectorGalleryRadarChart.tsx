@@ -25,7 +25,6 @@ const SectorGalleryRadarChart = ({ data, minimum, maximum }: Props) => {
         counter++;
       }
     });
-    console.log("dshfsuhfiuhfarfarfg", counter);
     setChartTitle(
       `${data._sector} - ${counter} ${
         counter === 1 ? " company" : " companies"
