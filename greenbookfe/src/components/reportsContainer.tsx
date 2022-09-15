@@ -23,7 +23,7 @@ const ReportsContainer = () => {
     setPage(value);
   };
 
-  if (reports.length > 0) {
+  if (reports.length > 0 && reportsGraphData.length > 0) {
     return (
       <>
         <Grid container spacing={4}>
