@@ -29,6 +29,7 @@ const ReportsContainer = () => {
             .slice(resultsPerPage * (page - 1), resultsPerPage * page)
             .map((entry: IReport, index: number) => {
               const {
+                _id,
                 companyName,
                 country,
                 reviewer,
@@ -41,6 +42,7 @@ const ReportsContainer = () => {
               return (
                 <ReviewCard
                   key={`Review_card_${index}`}
+                  _id={_id}
                   company={companyName}
                   country={country}
                   reviewLink={reviewLink}

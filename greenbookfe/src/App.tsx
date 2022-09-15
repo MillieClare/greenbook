@@ -10,7 +10,7 @@ import LoadingScreen from "./components/loadingScreen";
 import LoadingOverlay from "./components/loadingOverlay";
 import RadarChart from "./components/charts/radarChart";
 import RadarChartContainer from "./components/radarChartContainer";
-import SectorRadarChartContainer from "./components/sectorRadarChartContainer";
+// import SectorRadarChartContainer from "./components/sectorRadarChartContainer";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";

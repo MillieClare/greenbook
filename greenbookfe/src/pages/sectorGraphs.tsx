@@ -1,6 +1,6 @@
 import * as React from "react";
 import ContentContainer from "../components/contentContainer";
-import SectorRadarChartContainer from "../components/sectorRadarChartContainer";
+// import SectorRadarChartContainer from "../components/sectorRadarChartContainer";
 import { useAppSelector } from "../state/hooks";
 import { allReports } from "../state/features/reports/reportsSlice";
 // import LoadingScreen from "../components/loadingScreen";
@@ -16,7 +16,7 @@ const SectorGraphs = () => {
       {/* {isGraphsLoading ? <LoadingOverlay /> : null} */}
 
       <ContentContainer backgroundFilled={false}>
-        <SectorRadarChartContainer />
+        {/* <SectorRadarChartContainer /> */}
       </ContentContainer>
     </React.Fragment>
   );

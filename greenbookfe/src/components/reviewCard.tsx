@@ -43,6 +43,7 @@ const modalStyle = {
 };
 
 const ReviewCard = ({
+  _id,
   reviewLink,
   company,
   reviewer,
@@ -52,6 +53,7 @@ const ReviewCard = ({
   marketInformationLink,
   marketInformationDate,
 }: {
+  _id?: string;
   reviewLink?: string;
   company: string;
   sector?: string;
@@ -253,7 +255,7 @@ const ReviewCard = ({
           overflow: "hidden",
         }}
         onClick={() => {
-          navigate(`/greenbook/${company}`);
+          navigate(`/greenbook/company/${_id}`);
         }}
       >
         <Grid item xs={12} lg={7}>

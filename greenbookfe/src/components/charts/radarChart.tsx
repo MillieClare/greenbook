@@ -23,55 +23,6 @@ interface ChartDataObject {
 
 const RadarChart = ({ data, minimum, maximum }: Props) => {
   const [filteredData, setFilteredData] = React.useState(null);
-  // data = [{
-  //     "_id": "631240a48146e9e7c05400e4",
-  //     "companyName": "ABANCA",
-  //     "sentimentScore": 1,
-  //     "topCompanyWords": {
-  //         "energy": 5,
-  //         "environmental": 10,
-  //         "management": 15,
-  //         "party": 20,
-  //         "buildings": 25,
-  //         "sustainability": 30
-  //     }
-  // }, {
-  //     "_id": "631240a48146e9e7c05400e4",
-  //     "companyName": "BABANCA",
-  //     "sentimentScore": 1,
-  //     "topCompanyWords": {
-  //         "energy": 48,
-  //         "environmental": 24,
-  //         "management": 32,
-  //         "party": 16,
-  //         "buildings": 8,
-  //         "sustainability": 40
-  //     }
-  // },, {
-  //     "_id": "631240a48146e9e7c05400e4",
-  //     "companyName": "CABANCA",
-  //     "sentimentScore": 1,
-  //     "topCompanyWords": {
-  //         "energy": 6,
-  //         "environmental": 18,
-  //         "management": 30,
-  //         "party": 36,
-  //         "buildings": 0,
-  //         "sustainability": 12
-  //     }
-  // },, {
-  //     "_id": "631240a48146e9e7c05400e4",
-  //     "companyName": "DABANCA",
-  //     "sentimentScore": 1,
-  //     "topCompanyWords": {
-  //         "energy": 51,
-  //         "environmental": 32.5378277861242,
-  //         "management": 15.73553116878063,
-  //         "party": 35.37153650105044,
-  //         "buildings": 1.1823215567939547,
-  //         "sustainability": 29.487406431175053
-  //     }
-  // },]
 
   useEffect(() => {
     let processedData: any[] = [];
