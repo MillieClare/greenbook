@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/greenbook/static/css/main.4e24ed4b.css",
-    "main.js": "/greenbook/static/js/main.38ae7e6c.js",
+    "main.js": "/greenbook/static/js/main.ee9e29c8.js",
     "static/js/787.836e6481.chunk.js": "/greenbook/static/js/787.836e6481.chunk.js",
     "index.html": "/greenbook/index.html",
     "main.4e24ed4b.css.map": "/greenbook/static/css/main.4e24ed4b.css.map",
-    "main.38ae7e6c.js.map": "/greenbook/static/js/main.38ae7e6c.js.map",
+    "main.ee9e29c8.js.map": "/greenbook/static/js/main.ee9e29c8.js.map",
     "787.836e6481.chunk.js.map": "/greenbook/static/js/787.836e6481.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4e24ed4b.css",
-    "static/js/main.38ae7e6c.js"
+    "static/js/main.ee9e29c8.js"
   ]
 }
