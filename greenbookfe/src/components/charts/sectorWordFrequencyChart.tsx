@@ -10,7 +10,6 @@ type Props = {
 const SectorWordFrequencyChart = ({ data }: Props) => {
   const [filteredData, setFilteredData] = React.useState<any>(null);
   const [topWords, setTopWords] = React.useState<any>([]);
-
   useEffect(() => {
     let wordCountData: any = {};
 
@@ -28,20 +27,17 @@ const SectorWordFrequencyChart = ({ data }: Props) => {
       });
     });
     delete wordCountData._sector;
-    console.log("+++++++++++++++++++++++", wordCountData);
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      Object.values(wordCountData)
-    );
+
     let values: any = [];
     let keys: any = [];
     Object.keys(wordCountData).forEach((key: any) => {
       values.push(wordCountData[key]);
       keys.push(key);
     });
+    values.sort((a: any, b: any) => b - a);
+
     setTopWords(keys);
     setFilteredData([{ name: "Top words Frequency", data: values }]);
-    // setFilteredData(processedData);
   }, [data]);
 
   const options = {

@@ -4,6 +4,7 @@ const Colors = {
   green: "#5CDB95",
   darkGreen: "#379683",
   dark: "#05386B",
+  red: "#E74C3C",
 };
 
 const hexToRgb = (hex: string) => {

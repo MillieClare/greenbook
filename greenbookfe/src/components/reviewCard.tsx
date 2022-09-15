@@ -322,9 +322,7 @@ const ReviewCard = ({
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <Item item justifyContent="flex-start" alignItems="center">
-            {sentimentScore && sentimentScore === 1 ? (
-              <CompanyRating rating={sentimentScore} />
-            ) : null}
+            {sentimentScore ? <CompanyRating rating={sentimentScore} /> : null}
           </Item>
         </Grid>
         <Grid

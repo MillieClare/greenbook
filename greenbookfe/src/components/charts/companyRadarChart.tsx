@@ -41,7 +41,7 @@ const CompanyRadarChart = ({
       height: 350,
     },
     title: {
-      text: `${companyData.companyName}: ${companyData.sector}`,
+      text: "Top word company scores compared to whole sector",
     },
     stroke: {
       width: 2,
@@ -60,7 +60,9 @@ const CompanyRadarChart = ({
     },
     yaxis: {
       show: false,
-      tickAmount: 6,
+      tickAmount: 5,
+      min: 0,
+      max: 1,
     },
   };
   return (

@@ -1,9 +1,10 @@
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
+import { useAppSelector } from "../../state/hooks";
 import { Colors } from "../../styles/colors";
 import { FontFamilies } from "../../styles/fonts/fontFamilies";
-
+import { allReports } from "../../state/features/reports/reportsSlice";
 type Props = {
   data?: any;
   minimum: number;
@@ -11,13 +12,25 @@ type Props = {
 };
 
 const SectorGalleryRadarChart = ({ data, minimum, maximum }: Props) => {
+  const reports = useAppSelector(allReports);
   const [filteredData, setFilteredData] = React.useState<any>(null);
   const [chartTitle, setChartTitle] = React.useState("");
 
   useEffect(() => {
     let processedData: any[] = [];
     let tempData = JSON.parse(JSON.stringify(data));
-    setChartTitle(data._sector);
+    let counter = 0;
+    const company = reports.find((entry) => {
+      if (entry.sector === data._sector) {
+        counter++;
+      }
+    });
+    console.log("dshfsuhfiuhfarfarfg", counter);
+    setChartTitle(
+      `${data._sector} - ${counter} ${
+        counter === 1 ? " company" : " companies"
+      }`
+    );
     delete tempData._sector;
     let entryDataArray: any[] = [];
     let entryData: any = {};

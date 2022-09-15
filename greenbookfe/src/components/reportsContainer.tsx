@@ -2,7 +2,10 @@ import { Grid, Pagination } from "@mui/material";
 import ReviewCard from "./reviewCard";
 
 import { useAppSelector } from "./../state/hooks";
-import { filteredReports } from "../state/features/reports/reportsSlice";
+import {
+  allReportGraphData,
+  filteredReports,
+} from "../state/features/reports/reportsSlice";
 import NoResultsScreen from "./noResultsScreen";
 import { useState } from "react";
 
@@ -10,6 +13,7 @@ const resultsPerPage = 21;
 
 const ReportsContainer = () => {
   const reports = useAppSelector(filteredReports);
+  const reportsGraphData = useAppSelector(allReportGraphData);
   const [page, setPage] = useState(1);
 
   const handlePaginationChange = (
@@ -35,12 +39,19 @@ const ReportsContainer = () => {
                 sector,
                 marketInformationDate,
                 marketInformationLink,
-                sentimentScore,
               } = entry;
+              const companyInfo = reportsGraphData.find(
+                (entry) => entry.companyName === companyName
+              );
+              const sentimentScore = Object.keys(
+                companyInfo.topCompanyWords
+              ).filter(
+                (entry) => companyInfo.topCompanyWords[entry] >= 0.8
+              ).length;
               return (
                 <ReviewCard
-                  key={`Review_card_${index}`}
                   _id={_id}
+                  key={`Review_card_${index}`}
                   company={companyName}
                   country={country}
                   reviewLink={reviewLink}

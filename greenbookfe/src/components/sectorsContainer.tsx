@@ -65,6 +65,7 @@ const SectorsContainer = () => {
     }
   }, [filteredWords, sectors]);
 
+  console.log("........................ processed", processedSectors);
   if (processedSectors.length > 0) {
     return (
       <>

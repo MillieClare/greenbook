@@ -9,7 +9,7 @@ const CompanyRating = ({ rating }: { rating: number }) => {
       name="text-feedback"
       value={rating}
       readOnly
-      precision={0.5}
+      precision={1}
       icon={
         <EnergySavingsLeafIcon
           style={{ color: Colors.darkGreen }}
