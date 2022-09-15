@@ -1,12 +1,10 @@
-import { Grid, Pagination, Typography } from "@mui/material";
+import { Grid, Pagination } from "@mui/material";
 import ReviewCard from "./reviewCard";
 
 import { useAppSelector } from "./../state/hooks";
 import { filteredReports } from "../state/features/reports/reportsSlice";
 import NoResultsScreen from "./noResultsScreen";
 import { useState } from "react";
-// import { FontFamilies } from "../styles/fonts/fontFamilies";
-// import { Colors } from "../styles/colors";
 
 const resultsPerPage = 21;
 

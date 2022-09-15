@@ -1,27 +1,21 @@
-import { Analytics } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-import { Colors } from "../../styles/colors";
-import { FontFamilies } from "../../styles/fonts/fontFamilies";
 
-type Props = {
-  data?: any;
-  minimum: number;
-  maximum: number;
-};
-
-const CompanyRadarChart = (
-  companyData: any,
-  sectorData: any,
-  wordValueData: any
-) => {
+const CompanyRadarChart = ({
+  companyData,
+  sectorData,
+  wordValueData,
+}: {
+  companyData: any;
+  sectorData: any;
+  wordValueData: any;
+}) => {
   const [chartCategories, setChartCategories] = useState<any>([]);
   const [processedData, setProcessedData] = useState<any>([]);
   useEffect(() => {
     const companyDataArray: any[] = [];
     const sectorDataArray: any[] = [];
-    console.log("---------------------", { wordValueData });
     Object.keys(wordValueData.topCompanyWords).forEach((word) => {
       const companyWord = wordValueData.topCompanyWords[word];
       const sectorWord = sectorData.find((entry: any) => entry.word === word);
@@ -47,7 +41,7 @@ const CompanyRadarChart = (
       height: 350,
     },
     title: {
-      text: "Company chart",
+      text: `${companyData.companyName}: ${companyData.sector}`,
     },
     stroke: {
       width: 2,
@@ -65,8 +59,8 @@ const CompanyRadarChart = (
       categories: chartCategories,
     },
     yaxis: {
-      min: 0,
-      max: 1,
+      show: false,
+      tickAmount: 6,
     },
   };
   return (

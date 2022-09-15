@@ -8,7 +8,6 @@ import { useAppSelector, useAppDispatch } from "./../state/hooks";
 import {
   availableFilterOptions,
   filterSettings,
-  filterByCountry,
   clearFilters,
   addFilter,
   removeFilter,

@@ -1,5 +1,4 @@
-import { Analytics } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { Colors } from "../../styles/colors";

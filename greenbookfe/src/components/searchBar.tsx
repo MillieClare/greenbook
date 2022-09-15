@@ -49,14 +49,8 @@ const SearchBar = () => {
   const dispatch = useAppDispatch();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log({ searchTerm });
     setSearchTerm(event.target.value);
   };
-
-  const handleOnFocus = React.useCallback(
-    (ev?: React.FocusEvent<HTMLInputElement>) => {},
-    []
-  );
 
   const handleFocusEvent = React.useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {

@@ -13,7 +13,6 @@ export const fetchAllCompanies = () => {
 export const fetchAllSectorGraphData = () => {
   return new Promise<any>((resolve) =>
     getAllSectorGraphData().then((res: any) => {
-      console.log({ res });
       resolve(res);
     })
   );

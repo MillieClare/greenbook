@@ -1,15 +1,4 @@
-import {
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  Button,
-  Paper,
-  Tooltip,
-  Popover,
-  Modal,
-} from "@mui/material";
-import CountryText from "./countryText";
+import { Typography, Grid, Button, Tooltip, Modal } from "@mui/material";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import {
   FileDownload,
@@ -20,27 +9,12 @@ import { Colors } from "./../styles/colors";
 import CompanyRating from "./companyRating";
 import { styled } from "@mui/material/styles";
 import { getCountryFlag } from "../utilities/countryFormat";
-import { useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Item = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  padding: 15,
-  backgroundColor: Colors.light,
-  // bgcolor: 'background.paper',
-  // border: '2px solid #000',
-  // boxShadow: 24,
-  // p: 4,
-};
 
 const ReviewCard = ({
   _id,
@@ -63,7 +37,6 @@ const ReviewCard = ({
   marketInformationLink?: string;
   marketInformationDate?: string;
 }) => {
-  // const [downloadOpen, setDownloadMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const [anchorElement, setAnchorElement] =
@@ -87,10 +60,6 @@ const ReviewCard = ({
   const handleReviewClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorElement(event.currentTarget);
   };
-
-  // const handleClose = () => {
-  //     setAnchorElement(null);
-  // };
 
   const downloadMenuOpen = Boolean(anchorElement);
   const id = downloadMenuOpen ? "download-file-popover" : undefined;
@@ -254,11 +223,16 @@ const ReviewCard = ({
           borderRadius: 10,
           overflow: "hidden",
         }}
-        onClick={() => {
-          navigate(`/greenbook/company/${_id}`);
-        }}
       >
-        <Grid item xs={12} lg={7}>
+        <Grid
+          item
+          xs={12}
+          lg={7}
+          onClick={() => {
+            navigate(`/greenbook/company/${_id}`);
+          }}
+          className="report-card"
+        >
           <Item
             style={{ height: 80 }}
             item

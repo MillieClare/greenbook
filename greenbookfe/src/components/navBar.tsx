@@ -1,30 +1,15 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  InputBase,
-  Typography,
-  Chip,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Chip } from "@mui/material";
 import GreenBookLogo from "./greenBookLogo";
 import { FilterAltRounded, FilterAltOffRounded } from "@mui/icons-material";
 import { Colors } from "../styles/colors";
-import SearchIcon from "@mui/icons-material/Search";
 import FilterOptionContainer from "./filterOptionContainer";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import SearchBar from "./searchBar";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
-import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import WorkIcon from "@mui/icons-material/Work";
 import { Link } from "react-router-dom";
@@ -76,12 +61,10 @@ const NavBar = ({ hideFilters }: { hideFilters: boolean }) => {
               <Chip
                 icon={<AutoGraphIcon style={{ color: Colors.darkGreen }} />}
                 variant="outlined"
-                // component="a"
                 sx={{
                   fontFamily: FontFamilies.Montserrat,
                   borderColor: "transparent",
                 }}
-                // href="/greenbook/sectors"
                 onClick={handleGraphMenuClick}
                 label="Graphs"
                 clickable

@@ -1,7 +1,5 @@
 import { Typography, Grid } from "@mui/material";
-import CountryText from "./countryText";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
-import { FileDownload } from "@mui/icons-material";
 import { Colors } from "./../styles/colors";
 import { useEffect } from "react";
 
@@ -30,7 +28,6 @@ const LoadingScreen = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("LOADING");
     dispatch(getAllCompaniesAsync());
     dispatch(getAllSectorGraphDataAsync());
     dispatch(getAllReportGraphDataAsync());

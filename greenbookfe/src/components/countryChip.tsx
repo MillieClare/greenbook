@@ -1,7 +1,6 @@
 import { Chip, Grid, Tooltip } from "@mui/material";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import { Colors } from "../styles/colors";
-import { getCountryString } from "../utilities/countryFormat";
 import { countryList } from "../utilities/countryList";
 import Emoji from "./emoji";
 
@@ -12,7 +11,6 @@ type Props = {
 };
 
 const CountryChip = ({ country, onClick, selected }: Props) => {
-  const countryString = getCountryString(country);
   const countryFlag =
     countryList.find((entry) => entry.name === country)?.flag || "🏳️‍🌈";
 

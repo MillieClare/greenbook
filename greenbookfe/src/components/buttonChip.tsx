@@ -1,5 +1,4 @@
 import { Chip, Grid, Tooltip } from "@mui/material";
-// import { FontFamilies } from "../../styles/fonts/fontFamilies";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 
 type Props = {

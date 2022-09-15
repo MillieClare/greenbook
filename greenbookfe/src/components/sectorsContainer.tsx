@@ -1,5 +1,4 @@
-import { Grid, Pagination, Typography } from "@mui/material";
-import ReviewCard from "./reviewCard";
+import { Grid } from "@mui/material";
 
 import { useAppSelector } from "./../state/hooks";
 import { allSectorGraphData } from "../state/features/reports/reportsSlice";
@@ -28,12 +27,12 @@ const SectorsContainer = () => {
         )
       )
     ) as string[];
-    setListOfTopWords(topWords);
+    setListOfTopWords(topWords.sort());
     if (filteredWords.length === 0) {
       let tempProcessedSectors: any[] = [];
       sectorNames.forEach((entry) => {
         let values = sectors.filter((item) => item.sectorName === entry);
-        let object: any = { ["_sector"]: entry };
+        let object: any = { _sector: entry };
         values.forEach((value) => {
           let word = value.word[0].toUpperCase() + value.word.slice(1);
           object[word] = value.normalisedScore;
@@ -53,7 +52,7 @@ const SectorsContainer = () => {
           lowercaseFilteredWords.includes(item.word)
         );
         if (containsValue.length === filteredWords.length) {
-          let object: any = { ["_sector"]: entry };
+          let object: any = { _sector: entry };
           values.forEach((value) => {
             let word = value.word[0].toUpperCase() + value.word.slice(1);
             object[word] = value.normalisedScore;
@@ -64,36 +63,30 @@ const SectorsContainer = () => {
       setProcessedSectors(tempProcessedSectors);
       setBusy(false);
     }
-  }, [filteredWords]);
+  }, [filteredWords, sectors]);
 
   if (processedSectors.length > 0) {
     return (
       <>
         {busy ? <LoadingOverlay /> : null}
         <Grid container spacing={4}>
-          <Grid
-            item
-            xs={12}
-            margin={"auto"}
-            style={{ padding: 10, marginBottom: 20 }}
-          >
-            <SectorWordFrequencyChart data={processedSectors} />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-            margin={"auto"}
-            style={{ padding: 10, marginBottom: 20 }}
-          >
+          <Grid item xs={12} md={4} margin={"auto"} style={{ padding: 10 }}>
             <SectorFilterDropdown
               words={listOfTopWords}
               filteredWords={filteredWords}
               onChange={(value) => {
                 setFilteredWords(value);
-                console.log(filteredWords);
+                // console.log(filteredWords);
               }}
             />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            margin={"auto"}
+            style={{ padding: 10, marginBottom: 30 }}
+          >
+            <SectorWordFrequencyChart data={processedSectors} />
           </Grid>
         </Grid>
         <Grid container spacing={4}>
@@ -127,7 +120,7 @@ const SectorsContainer = () => {
                 filteredWords={filteredWords}
                 onChange={(value) => {
                   setFilteredWords(value);
-                  console.log(filteredWords);
+                  // console.log(filteredWords);
                 }}
               />
             </Grid>

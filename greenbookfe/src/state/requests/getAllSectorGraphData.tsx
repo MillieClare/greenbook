@@ -10,7 +10,6 @@ const getAllSectorGraphData = async () => {
         },
       }
     );
-    console.log({ data });
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

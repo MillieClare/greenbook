@@ -6,14 +6,12 @@ import {
   allReports,
   allSectorGraphData,
 } from "../state/features/reports/reportsSlice";
-import ReportsContainer from "../components/reportsContainer";
 import LoadingScreen from "../components/loadingScreen";
 import NavBar from "../components/navBar";
 import CompanyRadarChart from "../components/charts/companyRadarChart";
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-// import CompanyContainer from "../components/companyContainer";
 
 const Company = () => {
   const { id } = useParams();
@@ -38,8 +36,6 @@ const Company = () => {
       setWordValueData(wordData[0]);
     }
   }, [reports, sectors, normalisedValues]);
-
-  console.log({ companyData }, { sectorData }, { wordValueData });
 
   return (
     <React.Fragment>

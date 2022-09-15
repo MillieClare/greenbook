@@ -29,6 +29,10 @@ code {
     text-decoration: none;
 }
 
+.report-card:hover {
+    cursor: pointer;
+}
+
 .brand-logo:hover {
     cursor: pointer;
 }

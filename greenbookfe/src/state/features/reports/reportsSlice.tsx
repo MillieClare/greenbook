@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "./../../store";
-import MockData from "./../../../mockData";
 
 import { toast } from "react-toastify";
 import { getCountryString } from "../../../utilities/countryFormat";
-import getAllCompanies from "../../requests/getAllCompanies";
 
 import {
   fetchAllCompanies,
@@ -26,10 +24,6 @@ export interface ReportsState {
   };
   loading: boolean;
   status?: string;
-}
-
-interface IFilterOption {
-  [key: string]: any;
 }
 
 const initialState: ReportsState = {
@@ -57,7 +51,7 @@ export const getAllSectorGraphDataAsync = createAsyncThunk(
   async () => {
     const response = await fetchAllSectorGraphData();
     // The value we return becomes the `fulfilled` action payload
-    console.log({ response });
+    // console.log({ response });
     return response.sectorWords;
   }
 );
@@ -283,7 +277,7 @@ export const reportsSlice = createSlice({
             new Set(action.payload.map((report: any) => report.reviewer.trim()))
           ) as [],
         };
-        console.log(filterOptions.countries);
+        // console.log(filterOptions.countries);
         state.filterOptions = filterOptions;
         state.filteredReports = action.payload;
       })
@@ -296,7 +290,6 @@ export const reportsSlice = createSlice({
       .addCase(getAllSectorGraphDataAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.allSectorGraphData = action.payload;
-        console.log(state.allSectorGraphData);
       })
       .addCase(getAllSectorGraphDataAsync.rejected, (state) => {
         state.status = "failed";
@@ -307,7 +300,6 @@ export const reportsSlice = createSlice({
       .addCase(getAllReportGraphDataAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.allReportGraphData = action.payload;
-        console.log(state.allReportGraphData);
       })
       .addCase(getAllReportGraphDataAsync.rejected, (state) => {
         state.status = "failed";

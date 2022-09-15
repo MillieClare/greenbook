@@ -1,9 +1,7 @@
-import { Analytics } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { Colors } from "../../styles/colors";
-import { FontFamilies } from "../../styles/fonts/fontFamilies";
 
 type Props = {
   data?: any;
@@ -11,17 +9,10 @@ type Props = {
 
 const SectorWordFrequencyChart = ({ data }: Props) => {
   const [filteredData, setFilteredData] = React.useState<any>(null);
-  const [chartTitle, setChartTitle] = React.useState("");
   const [topWords, setTopWords] = React.useState<any>([]);
 
   useEffect(() => {
-    console.log({ data });
     let wordCountData: any = {};
-
-    // const topWords = Array.from(
-    //   new Set(data.map((entry: any) =>{ console.log({entry}); return entry.word[0].toUpperCase() + entry.word.slice(1)}))
-    // ) as string[]
-    //   console.log({topWords})
 
     data.forEach((sector: any) => {
       Object.keys(sector).forEach((word: any) => {
@@ -37,8 +28,11 @@ const SectorWordFrequencyChart = ({ data }: Props) => {
       });
     });
     delete wordCountData._sector;
-    console.log(wordCountData);
-    console.log(Object.values(wordCountData));
+    console.log("+++++++++++++++++++++++", wordCountData);
+    console.log(
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+      Object.values(wordCountData)
+    );
     let values: any = [];
     let keys: any = [];
     Object.keys(wordCountData).forEach((key: any) => {
