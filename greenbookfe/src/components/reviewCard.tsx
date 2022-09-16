@@ -16,6 +16,8 @@ const Item = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
+const scoreText = `A score from 1-6. One leaf for every word that this company has a score over 0.8.`;
+
 const ReviewCard = ({
   _id,
   reviewLink,
@@ -321,9 +323,13 @@ const ReviewCard = ({
           </Item>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <Item item justifyContent="flex-start" alignItems="center">
-            {sentimentScore ? <CompanyRating rating={sentimentScore} /> : null}
-          </Item>
+          <Tooltip title={scoreText}>
+            <Item item justifyContent="flex-start" alignItems="center">
+              {sentimentScore ? (
+                <CompanyRating rating={sentimentScore} />
+              ) : null}
+            </Item>
+          </Tooltip>
         </Grid>
         <Grid
           item
