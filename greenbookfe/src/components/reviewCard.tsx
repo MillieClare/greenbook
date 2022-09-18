@@ -1,4 +1,13 @@
-import { Typography, Grid, Button, Tooltip, Modal } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Button,
+  Tooltip,
+  Modal,
+  Card,
+  Box,
+  CardHeader,
+} from "@mui/material";
 import { FontFamilies } from "../styles/fonts/fontFamilies";
 import {
   FileDownload,
@@ -9,8 +18,17 @@ import { Colors } from "./../styles/colors";
 import CompanyRating from "./companyRating";
 import { styled } from "@mui/material/styles";
 import { getCountryFlag } from "../utilities/countryFormat";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../state/hooks";
+import {
+  filteredReports,
+  allReportGraphData,
+  allSectorGraphData,
+  allReports,
+} from "../state/features/reports/reportsSlice";
+import CompanyRadarChart from "./charts/companyRadarChart";
+import { CardContent } from "@mui/joy";
 
 const Item = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -29,7 +47,7 @@ const ReviewCard = ({
   marketInformationLink,
   marketInformationDate,
 }: {
-  _id?: string;
+  _id: string;
   reviewLink?: string;
   company: string;
   sector?: string;
@@ -41,12 +59,47 @@ const ReviewCard = ({
 }) => {
   const navigate = useNavigate();
 
+  const reports = useAppSelector(allReports);
+  const sectors = useAppSelector(allSectorGraphData);
+  const normalisedValues = useAppSelector(allReportGraphData);
+
   const [anchorElement, setAnchorElement] =
     React.useState<HTMLButtonElement | null>(null);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [downloadOptionsOpen, setDownloadOptionsOpen] = React.useState(false);
+  const [chartOpen, setChartOpen] = React.useState(false);
+  const handleDownloadOptionsOpen = () => setDownloadOptionsOpen(true);
+  const handleDownloadOptionsClose = () => setDownloadOptionsOpen(false);
+  const handleChartOpen = () => {
+    console.log({ companyData });
+    console.log({ sectorData });
+    console.log({ wordValueData });
+    setChartOpen(true);
+  };
+  const handleChartClose = () => setChartOpen(false);
+
+  const [companyData, setCompanyData] = useState<any>(null);
+  const [sectorData, setSectorData] = useState<any>(null);
+  const [wordValueData, setWordValueData] = useState<any>(null);
+
+  useEffect(() => {
+    if (reports && sectors && normalisedValues) {
+      const companyEntry = reports.find(
+        (entry) => entry.companyName === company
+      );
+      if (companyEntry) {
+        const sectorEntry = sectors.filter(
+          (entry) => entry.sectorName === sector
+        );
+        const wordDataEntry = normalisedValues.filter(
+          (entry) => entry.companyName === company
+        );
+        setCompanyData(companyEntry);
+        setSectorData(sectorEntry);
+        setWordValueData(wordDataEntry[0]);
+      }
+    }
+  }, [company, reports, sectors, normalisedValues]);
 
   const handleDownloadButtonClick = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -59,6 +112,7 @@ const ReviewCard = ({
   ) => {
     setAnchorElement(event.currentTarget);
   };
+
   const handleReviewClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorElement(event.currentTarget);
   };
@@ -75,7 +129,7 @@ const ReviewCard = ({
             endIcon={<FileDownload />}
             disableElevation
             fullWidth
-            onClick={handleOpen}
+            onClick={handleDownloadOptionsOpen}
             style={{
               fontFamily: FontFamilies.Montserrat,
               backgroundColor: Colors.green,
@@ -88,8 +142,8 @@ const ReviewCard = ({
           </Button>
 
           <Modal
-            open={open}
-            onClose={handleClose}
+            open={downloadOptionsOpen}
+            onClose={handleDownloadOptionsClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -217,6 +271,105 @@ const ReviewCard = ({
       md={4}
       style={{ borderRadius: 10, overflow: "hidden" }}
     >
+      {companyData && sectorData && wordValueData ? (
+        <Modal
+          open={chartOpen}
+          onClose={handleChartClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Card id={"company-info-modal"}>
+            <CardHeader
+              title={company}
+              titleTypographyProps={{
+                align: "center",
+                fontFamily: FontFamilies.Montserrat,
+                color: "#FFFFFF",
+              }}
+              subheader={sector}
+              subheaderTypographyProps={{
+                align: "center",
+                fontFamily: FontFamilies.Montserrat,
+                color: "#FFFFFF",
+              }}
+              sx={{
+                backgroundColor: Colors.darkGreen,
+              }}
+              action={
+                <Tooltip title={country as string}>
+                  <div style={{ marginRight: 10 }}>
+                    {getCountryFlag(country)}
+                  </div>
+                </Tooltip>
+              }
+            />
+            <CardContent>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  alignContent: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ul style={{ paddingInlineStart: 0 }}>
+                  <Tooltip title={scoreText}>
+                    <Item item justifyContent="flex-start" alignItems="center">
+                      {sentimentScore !== undefined ? (
+                        <CompanyRating rating={sentimentScore} />
+                      ) : null}
+                    </Item>
+                  </Tooltip>
+                  <Typography
+                    component="li"
+                    align="center"
+                    variant="caption"
+                    fontFamily={FontFamilies.Montserrat}
+                    sx={{ paddingBottom: 0, marginBottom: 0, display: "flex" }}
+                  >
+                    {`Reviewed by ${reviewer}`}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontWeight={"bold"}
+                    fontFamily={FontFamilies.Montserrat}
+                  >
+                    <span>Overall Sentiment Score: </span>
+                    <Typography
+                      variant="caption"
+                      fontFamily={FontFamilies.Montserrat}
+                      fontStyle={"italic"}
+                      sx={{
+                        marginBottom: 1,
+                        // textDecoration:'underline'
+                        color:
+                          sentimentScore === 0
+                            ? Colors.red
+                            : sentimentScore === 1
+                            ? Colors.darkGreen
+                            : Colors.dark,
+                      }}
+                    >
+                      {sentimentScore === 0
+                        ? "Negative"
+                        : sentimentScore === 1
+                        ? "Positive"
+                        : "Neutral"}
+                    </Typography>
+                  </Typography>
+                </ul>
+              </Box>
+              <CompanyRadarChart
+                companyData={companyData}
+                sectorData={sectorData}
+                wordValueData={wordValueData}
+                mdSize={12}
+              />
+            </CardContent>
+          </Card>
+        </Modal>
+      ) : null}
       <Grid
         container
         spacing={2}
@@ -230,9 +383,7 @@ const ReviewCard = ({
           item
           xs={12}
           lg={7}
-          onClick={() => {
-            navigate(`/greenbook/company/${_id}`);
-          }}
+          onClick={handleChartOpen}
           className="report-card"
         >
           <Item
@@ -325,7 +476,7 @@ const ReviewCard = ({
         <Grid item xs={12} sm={6} md={6}>
           <Tooltip title={scoreText}>
             <Item item justifyContent="flex-start" alignItems="center">
-              {sentimentScore ? (
+              {sentimentScore !== undefined ? (
                 <CompanyRating rating={sentimentScore} />
               ) : null}
             </Item>

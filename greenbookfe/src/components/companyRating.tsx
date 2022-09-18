@@ -7,9 +7,10 @@ const CompanyRating = ({ rating }: { rating: number }) => {
   return (
     <Rating
       name="text-feedback"
-      value={rating}
+      value={rating + 1}
       readOnly
       precision={1}
+      max={6}
       icon={
         <EnergySavingsLeafIcon
           style={{ color: Colors.darkGreen }}

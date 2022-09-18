@@ -1,18 +1,22 @@
 import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
+import { Colors } from "../../styles/colors";
 
 const CompanyRadarChart = ({
   companyData,
   sectorData,
   wordValueData,
+  mdSize = 4,
 }: {
   companyData: any;
   sectorData: any;
   wordValueData: any;
+  mdSize?: number;
 }) => {
   const [chartCategories, setChartCategories] = useState<any>([]);
   const [processedData, setProcessedData] = useState<any>([]);
+
   useEffect(() => {
     const companyDataArray: any[] = [];
     const sectorDataArray: any[] = [];
@@ -34,20 +38,21 @@ const CompanyRadarChart = ({
     ];
     setChartCategories(Object.keys(wordValueData.topCompanyWords));
     setProcessedData(seriesData);
-  }, []);
+    console.log("a");
+  }, [companyData, sectorData, wordValueData]);
 
   const options = {
     chart: {
       height: 350,
     },
     title: {
-      text: "Top word company scores compared to whole sector",
+      text: "Score vs sector average",
     },
     stroke: {
       width: 2,
     },
     fill: {
-      opacity: 0.1,
+      opacity: 0.25,
     },
     markers: {
       size: 5,
@@ -67,7 +72,7 @@ const CompanyRadarChart = ({
   };
   return (
     <>
-      <Grid item xs={12} md={4} style={{ padding: 10 }}>
+      <Grid item xs={12} md={mdSize} style={{ padding: 10 }}>
         <div style={{ background: `#FFFFFF`, padding: 10, borderRadius: 10 }}>
           {processedData.length > 0 ? (
             <Chart
